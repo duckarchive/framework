@@ -42,9 +42,6 @@ const DuckTable = forwardRef(
     ref: React.Ref<AgGridReact<T> | null>
   ) => {
     const agGridRef = useRef<AgGridReact<T>>(null);
-
-    console.log(activeFilterId, filters);
-
     useEffect(() => {
       if (!agGridRef.current?.api) {
         return;
@@ -92,65 +89,7 @@ const DuckTable = forwardRef(
                 {filter.title}
               </Button>
             ))}
-            {/* {enabledFilters?.[QuickFilter.PRE_USSR_FUNDS] && (
-              <Button
-                radius="full"
-                color="primary"
-                size="sm"
-                variant={
-                  activeQuickFilter === QuickFilter.PRE_USSR_FUNDS
-                    ? "solid"
-                    : "bordered"
-                }
-                onPress={handleFilterClick(QuickFilter.PRE_USSR_FUNDS)}
-              >
-                Фонди до 1917
-              </Button>
-            )}
-            {enabledFilters?.[QuickFilter.USSR_FUNDS] && (
-              <Button
-                radius="full"
-                color="primary"
-                size="sm"
-                variant={
-                  activeQuickFilter === QuickFilter.USSR_FUNDS
-                    ? "solid"
-                    : "bordered"
-                }
-                onPress={handleFilterClick(QuickFilter.USSR_FUNDS)}
-              >
-                Фонди після 1917
-              </Button>
-            )}
-            {enabledFilters?.[QuickFilter.PART_FUNDS] && (
-              <Button
-                radius="full"
-                color="primary"
-                size="sm"
-                variant={
-                  activeQuickFilter === QuickFilter.PART_FUNDS
-                    ? "solid"
-                    : "bordered"
-                }
-                onPress={handleFilterClick(QuickFilter.PART_FUNDS)}
-              >
-                Фонди ПРУ
-              </Button>
-            )} */}
           </div>
-
-          {/* {enabledFilters?.[QuickFilter.PART_FUNDS] && (
-          <Button
-            radius="full"
-            color="secondary"
-            size="sm"
-            isDisabled
-            variant={activeQuickFilter === QuickFilter.PART_FUNDS ? "solid" : "bordered"}
-            onPress={handleFilterClick(QuickFilter.PART_FUNDS)}
-          >
-            🛠️ Доступні 🛠️
-          </Button>
-        )} */}
         </div>
         <div className="h-96 flex-grow">
           <AgGridReact

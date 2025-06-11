@@ -8,7 +8,6 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Button } from "@heroui/button";
 const DuckTable = forwardRef(({ appTheme = "light", columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, }, ref) => {
     const agGridRef = useRef(null);
-    console.log(activeFilterId, filters);
     useEffect(() => {
         if (!agGridRef.current?.api) {
             return;
