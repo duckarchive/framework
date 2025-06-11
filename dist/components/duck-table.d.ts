@@ -9,14 +9,10 @@ interface DuckTableProps<T> {
         title: string;
         value: any;
     }[];
-    activeFilterIds: string[];
-    setActiveFilterIds: (ids: string[]) => void;
+    activeFilterId?: string;
+    setActiveFilterId: (id: string | undefined) => void;
     isLoading?: boolean;
     loadingPage?: number;
 }
-declare const DuckTable: import("react").ForwardRefExoticComponent<DuckTableProps<{
-    id: string;
-}> & import("react").RefAttributes<AgGridReact<{
-    id: string;
-}>>>;
+declare const DuckTable: import("react").ForwardRefExoticComponent<DuckTableProps<unknown> & import("react").RefAttributes<AgGridReact<unknown>>>;
 export default DuckTable;

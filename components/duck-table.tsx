@@ -9,7 +9,7 @@ import {
 } from "ag-grid-community";
 import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
-import { act, forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Button } from "@heroui/button";
 
 interface DuckTableProps<T> {
@@ -21,14 +21,14 @@ interface DuckTableProps<T> {
     title: string;
     value: any;
   }[];
-  activeFilterIds: string[];
-  setActiveFilterIds: (ids: string[]) => void;
+  activeFilterId?: string;
+  setActiveFilterId: (id: string | undefined) => void;
   isLoading?: boolean;
   loadingPage?: number;
 }
 
 const DuckTable = forwardRef(
-  <T extends { id: string }>(
+  <T,>(
     {
       appTheme = "light",
       columns,
@@ -36,12 +36,27 @@ const DuckTable = forwardRef(
       isLoading,
       loadingPage,
       filters,
-      activeFilterIds,
-      setActiveFilterIds,
+      activeFilterId,
+      setActiveFilterId,
     }: DuckTableProps<T>,
     ref: React.Ref<AgGridReact<T> | null>
   ) => {
     const agGridRef = useRef<AgGridReact<T>>(null);
+
+    useEffect(() => {
+      if (!agGridRef.current?.api) {
+        return;
+      }
+      if (activeFilterId) {
+        agGridRef.current.api.setColumnFilterModel("code", filters?.find(({ id }) => id === activeFilterId)?.value).then(() => {
+          agGridRef.current?.api.onFilterChanged();
+        });
+      } else {
+        agGridRef.current.api.setColumnFilterModel("code", null).then(() => {
+          agGridRef.current?.api.onFilterChanged();
+        });
+      }
+    }, [activeFilterId]);
 
     // Optional: expose internal agGridRef to parent
     useImperativeHandle(ref, () => agGridRef.current!, []);
@@ -50,11 +65,7 @@ const DuckTable = forwardRef(
       appTheme === "dark" ? themeQuartz.withPart(colorSchemeDark) : themeQuartz;
 
     const handleFilterClick = (filterId: string) => () => {
-      const newActiveFilterIds = activeFilterIds.includes(filterId)
-        ? activeFilterIds.filter((id) => id !== filterId)
-        : [...activeFilterIds, filterId];
-
-      setActiveFilterIds(newActiveFilterIds);
+      setActiveFilterId(activeFilterId === filterId ? undefined : filterId);
     };
 
     return (
@@ -68,7 +79,7 @@ const DuckTable = forwardRef(
                   radius="full"
                   color="primary"
                   size="sm"
-                  variant={activeFilterIds.includes(filter.id) ? "solid" : "bordered"}
+                  variant={activeFilterId === filter.id ? "solid" : "bordered"}
                   onPress={handleFilterClick(filter.id)}
                 >
                   {filter.title}
