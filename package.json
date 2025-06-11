@@ -1,0 +1,28 @@
+{
+  "name": "@duckarchive/framework",
+  "version": "0.0.1",
+  "description": "Framework with shared components for duckarchive applications",
+  "main": "index.ts",
+  "types": "index.ts",
+  "keywords": [
+    "nextjs",
+    "shared",
+    "components",
+    "typescript"
+  ],
+  "author": {
+    "name": "alexandrtovmach",
+    "email": "alexandrtovmach@gmail.com"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@heroui/skeleton": "^2.2.13",
+    "@types/react": "^19.1.8",
+    "next": "^13.0.0",
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@heroui/skeleton": "^2.2.13",
+    "@types/react": "^19.1.8"
+  }
+}
