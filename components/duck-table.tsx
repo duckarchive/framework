@@ -6,7 +6,7 @@ import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
 
 interface DuckTableProps<T> {
-  appTheme?: "dark" | "light";
+  appTheme?: string;
   columns: ColDef<T>[];
   rows: T[];
   isLoading?: boolean;

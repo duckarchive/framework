@@ -1,6 +1,6 @@
 import { ColDef } from "ag-grid-community";
 interface DuckTableProps<T> {
-    appTheme?: "dark" | "light";
+    appTheme?: string;
     columns: ColDef<T>[];
     rows: T[];
     isLoading?: boolean;
