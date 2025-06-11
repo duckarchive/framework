@@ -1,2 +1,4 @@
-export * from './components/duck-table-skeleton';
-export * from './components/page-panel-skeleton';
+import DuckTableSkeleton from './components/duck-table-skeleton';
+import PagePanelSkeleton from './components/page-panel-skeleton';
+
+export { DuckTableSkeleton, PagePanelSkeleton };
