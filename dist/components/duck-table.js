@@ -4,9 +4,9 @@ import { AgGridReact } from "ag-grid-react";
 import { themeQuartz, colorSchemeDark, } from "ag-grid-community";
 import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@heroui/button";
-const DuckTable = forwardRef(({ appTheme = "light", columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, }, ref) => {
+const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, }) => {
     const agGridRef = useRef(null);
     useEffect(() => {
         if (!agGridRef.current?.api) {
@@ -25,8 +25,6 @@ const DuckTable = forwardRef(({ appTheme = "light", columns, rows, isLoading, lo
             });
         }
     }, [activeFilterId]);
-    // Optional: expose internal agGridRef to parent
-    useImperativeHandle(ref, () => agGridRef.current, []);
     const agGridTheme = appTheme === "dark" ? themeQuartz.withPart(colorSchemeDark) : themeQuartz;
     const handleFilterClick = (filterId) => () => {
         console.log("click filter", filterId);
@@ -39,5 +37,5 @@ const DuckTable = forwardRef(({ appTheme = "light", columns, rows, isLoading, lo
                             buttons: ["clear"],
                         },
                     } }) })] }));
-});
+};
 export default DuckTable;
