@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Framework with shared components for duckarchive applications",
   "main": "index.ts",
-  "types": "index.ts",
   "keywords": [
     "nextjs",
     "shared",
