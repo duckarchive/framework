@@ -43,14 +43,21 @@ const DuckTable = forwardRef(
   ) => {
     const agGridRef = useRef<AgGridReact<T>>(null);
 
+    console.log(activeFilterId, filters);
+
     useEffect(() => {
       if (!agGridRef.current?.api) {
         return;
       }
       if (activeFilterId) {
-        agGridRef.current.api.setColumnFilterModel("code", filters?.find(({ id }) => id === activeFilterId)?.value).then(() => {
-          agGridRef.current?.api.onFilterChanged();
-        });
+        agGridRef.current.api
+          .setColumnFilterModel(
+            "code",
+            filters?.find(({ id }) => id === activeFilterId)?.value
+          )
+          .then(() => {
+            agGridRef.current?.api.onFilterChanged();
+          });
       } else {
         agGridRef.current.api.setColumnFilterModel("code", null).then(() => {
           agGridRef.current?.api.onFilterChanged();
@@ -65,6 +72,7 @@ const DuckTable = forwardRef(
       appTheme === "dark" ? themeQuartz.withPart(colorSchemeDark) : themeQuartz;
 
     const handleFilterClick = (filterId: string) => () => {
+      console.log("click filter", filterId);
       setActiveFilterId(activeFilterId === filterId ? undefined : filterId);
     };
 
@@ -72,20 +80,18 @@ const DuckTable = forwardRef(
       <>
         <div className="flex justify-between items-center h-10">
           <div className="flex gap-1">
-            {
-              filters?.map((filter) => (
-                <Button
-                  key={filter.id}
-                  radius="full"
-                  color="primary"
-                  size="sm"
-                  variant={activeFilterId === filter.id ? "solid" : "bordered"}
-                  onPress={handleFilterClick(filter.id)}
-                >
-                  {filter.title}
-                </Button>
-              ))
-            }
+            {filters?.map((filter) => (
+              <Button
+                key={filter.id}
+                radius="full"
+                color="primary"
+                size="sm"
+                variant={activeFilterId === filter.id ? "solid" : "bordered"}
+                onPress={handleFilterClick(filter.id)}
+              >
+                {filter.title}
+              </Button>
+            ))}
             {/* {enabledFilters?.[QuickFilter.PRE_USSR_FUNDS] && (
               <Button
                 radius="full"
