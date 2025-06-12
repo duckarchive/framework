@@ -27,8 +27,9 @@
     "ag-grid-community": "^33.3.2",
     "ag-grid-react": "^33.3.2",
     "date-fns": "^4.1.0",
-    "next": "^13.0.0",
-    "react": "^18.0.0"
+    "framer-motion": "^12.17.3",
+    "next": "^15.2.4",
+    "react": "^19.1.0"
   },
   "devDependencies": {
     "@heroui/button": "^2.2.21",
@@ -39,6 +40,7 @@
     "ag-grid-community": "^33.3.2",
     "ag-grid-react": "^33.3.2",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.17.3",
     "typescript": "^5.8.3"
   }
 }
