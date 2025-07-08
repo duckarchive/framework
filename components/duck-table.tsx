@@ -37,6 +37,7 @@ const DuckTable = <T,>({
   filters,
   activeFilterId,
   setActiveFilterId,
+  ...agGridProps
 }: DuckTableProps<T>) => {
   const agGridRef = useRef<AgGridReact<T>>(null);
   useEffect(() => {
@@ -108,6 +109,7 @@ const DuckTable = <T,>({
               buttons: ["clear"],
             } as ITextFilterParams,
           }}
+          {...agGridProps}
         />
       </div>
     </>
