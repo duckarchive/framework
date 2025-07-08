@@ -6,13 +6,14 @@ import {
   ITextFilterParams,
   themeQuartz,
   colorSchemeDark,
+  GridOptions,
 } from "ag-grid-community";
 import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
 import { useEffect, useRef } from "react";
 import { Button } from "@heroui/button";
 
-interface DuckTableProps<T> {
+interface DuckTableProps<T> extends GridOptions<T> {
   appTheme?: string;
   columns: ColDef<T>[];
   rows: T[];
