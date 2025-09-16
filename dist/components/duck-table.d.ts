@@ -1,5 +1,5 @@
-import { ColDef } from "ag-grid-community";
-interface DuckTableProps<T> {
+import { ColDef, GridOptions } from "ag-grid-community";
+interface DuckTableProps<T> extends GridOptions<T> {
     appTheme?: string;
     columns: ColDef<T>[];
     rows: T[];
@@ -13,5 +13,5 @@ interface DuckTableProps<T> {
     isLoading?: boolean;
     loadingPage?: number;
 }
-declare const DuckTable: <T>({ appTheme, columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, }: DuckTableProps<T>) => import("react/jsx-runtime").JSX.Element;
+declare const DuckTable: <T>({ appTheme, columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, ...agGridProps }: DuckTableProps<T>) => import("react/jsx-runtime").JSX.Element;
 export default DuckTable;
