@@ -9,7 +9,8 @@
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": ["components/**/*", "index.ts", "lib/**/*"]
 }
