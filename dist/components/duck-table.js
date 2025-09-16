@@ -6,7 +6,7 @@ import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
 import { useEffect, useRef } from "react";
 import { Button } from "@heroui/button";
-const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, }) => {
+const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, ...agGridProps }) => {
     const agGridRef = useRef(null);
     useEffect(() => {
         if (!agGridRef.current?.api) {
@@ -36,6 +36,6 @@ const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, 
                         filterParams: {
                             buttons: ["clear"],
                         },
-                    } }) })] }));
+                    }, ...agGridProps }) })] }));
 };
 export default DuckTable;
