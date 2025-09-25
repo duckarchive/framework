@@ -194,7 +194,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
             {currentProject?.children?.map((item) => (
               <NavbarItem
                 key={item.path}
-                isActive={item.path === pathname}
+                isActive={pathname.startsWith(item.path)}
                 className="px-0"
               >
                 <NavLink href={item.path}>{item.label}</NavLink>
@@ -247,7 +247,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
           {currentProject?.children?.map((item) => (
             <NavbarMenuItem
               key={`${item.label}`}
-              isActive={item.path === pathname}
+              isActive={pathname.startsWith(item.path)}
             >
               <NavLink
                 href={item.path}
