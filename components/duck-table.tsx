@@ -106,7 +106,7 @@ const DuckTable = <T,>({
             resizable: true,
             minWidth: 100,
             filterParams: {
-              buttons: ["clear"],
+              buttons: ["reset"],
             } as ITextFilterParams,
           }}
           {...agGridProps}
