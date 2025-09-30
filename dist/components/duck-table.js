@@ -34,7 +34,7 @@ const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, 
                         resizable: true,
                         minWidth: 100,
                         filterParams: {
-                            buttons: ["clear"],
+                            buttons: ["reset"],
                         },
                     }, ...agGridProps }) })] }));
 };
