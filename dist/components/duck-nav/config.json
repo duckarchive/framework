@@ -67,8 +67,8 @@
             "description": "Персональний кабінет",
             "children": [
                 {
-                    "label": "Кабінет",
-                    "path": "/cabinet",
+                    "label": "Запити",
+                    "path": "/requests",
                     "is_authorized": true
                 }
             ]
