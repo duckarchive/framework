@@ -22,6 +22,7 @@ import { usePathname } from "next/navigation";
 import SelectProject from "./select-project";
 import { Divider } from "@heroui/divider";
 import AuthButton from "./auth-button";
+import { useSession } from "next-auth/react";
 
 const LINK_CLASS =
   "text-base underline-offset-4 hover:underline hover:opacity-70";
@@ -155,6 +156,7 @@ interface DuckNavProps {
 }
 
 const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
+  const { status } = useSession();
   const originSiteUrl = siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isInIframe, setIsInIframe] = useState(false);
@@ -183,7 +185,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent className="basis-1/5" justify="start">
-        <NavbarBrand as="li" className="h-full relative">
+        <NavbarBrand as="li" className="h-full relative grow-0">
           <SelectProject
             projects={config.projects}
             currentProject={currentProject}
@@ -191,15 +193,22 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
         </NavbarBrand>
         <NavbarItem className="hidden md:flex ml-2">
           <ul className="flex gap-4 justify-start">
-            {currentProject?.children?.map((item) => (
-              <NavbarItem
-                key={item.path}
-                isActive={pathname.startsWith(item.path)}
-                className="px-0"
-              >
-                <NavLink href={item.path}>{item.label}</NavLink>
-              </NavbarItem>
-            ))}
+            {currentProject?.children
+              ?.filter((el: any) => {
+                if (el.is_authorized) {
+                  return status === "authenticated";
+                }
+                return true;
+              })
+              .map((item) => (
+                <NavbarItem
+                  key={item.path}
+                  isActive={pathname.startsWith(item.path)}
+                  className="px-0"
+                >
+                  <NavLink href={item.path}>{item.label}</NavLink>
+                </NavbarItem>
+              ))}
           </ul>
         </NavbarItem>
       </NavbarContent>
@@ -244,19 +253,26 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
             <AuthButton isFull />
             <Divider className="my-4" />
           </NavbarItem>
-          {currentProject?.children?.map((item) => (
-            <NavbarMenuItem
-              key={`${item.label}`}
-              isActive={pathname.startsWith(item.path)}
-            >
-              <NavLink
-                href={item.path}
-                onPress={() => setIsMenuOpen((prev) => !prev)}
+          {currentProject?.children
+            ?.filter((el: any) => {
+              if (el.is_authorized) {
+                return status === "authenticated";
+              }
+              return true;
+            })
+            .map((item) => (
+              <NavbarMenuItem
+                key={`${item.label}`}
+                isActive={pathname.startsWith(item.path)}
               >
-                {item.label}
-              </NavLink>
-            </NavbarMenuItem>
-          ))}
+                <NavLink
+                  href={item.path}
+                  onPress={() => setIsMenuOpen((prev) => !prev)}
+                >
+                  {item.label}
+                </NavLink>
+              </NavbarMenuItem>
+            ))}
         </ul>
       </NavbarMenu>
     </Navbar>

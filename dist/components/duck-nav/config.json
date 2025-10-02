@@ -70,16 +70,6 @@
                     "label": "Кабінет",
                     "path": "/cabinet",
                     "is_authorized": true
-                },
-                {
-                    "label": "Інтереси",
-                    "path": "/cabinet",
-                    "is_authorized": true
-                },
-                {
-                    "label": "Внесок",
-                    "path": "/contribution",
-                    "is_authorized": true
                 }
             ]
         },
