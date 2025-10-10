@@ -1,14 +1,14 @@
 export const sortNumeric = (a, b) => parseInt(a) - parseInt(b);
 export const sortText = (a, b) => a.localeCompare(b);
 export const sortDate = (a, b) => new Date(b).valueOf() - new Date(a).valueOf();
-const PREFIX_ORDER = { "": 0, "Р": 1, "П": 2 };
-const POSTFIX_ORDER = { "Т": 0, "Д": 1 };
+const PREFIX_ORDER = { "": 0, Р: 1, Н: 2, П: 3 };
+const POSTFIX_ORDER = { Т: 0, Д: 1 };
 export const sortCode = (a, b) => {
     // returns the comparison tuple for a code
     const key = (str) => {
         str = str.toUpperCase();
         // 1️⃣ prefix
-        const prefix = (str[0] === "Р" || str[0] === "П") ? str[0] : "";
+        const prefix = str[0] === "Р" || str[0] === "П" || str[0] === "Н" ? str[0] : "";
         const rest = str.slice(prefix.length);
         // 2️⃣ numeric part + whole postfix
         const [, numTxt = "", postfix = ""] = rest.match(/^(\d+)(.*)$/) || [];
@@ -17,7 +17,7 @@ export const sortCode = (a, b) => {
         const hasPost = postfix ? 1 : 0;
         // 4️⃣ first letter of postfix, then its digits
         const [, letters = "", digitsTxt = ""] = postfix.match(/^([^\d]*)(\d*)$/) || [];
-        const letterRank = letters ? (POSTFIX_ORDER[letters[0]] ?? 99) : 99;
+        const letterRank = letters ? POSTFIX_ORDER[letters[0]] ?? 99 : 99;
         const digitRank = digitsTxt ? +digitsTxt : -1; // -1 ⇒ “no digits”
         return [num, PREFIX_ORDER[prefix], hasPost, letterRank, letters, digitRank];
     };
