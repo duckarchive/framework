@@ -67,18 +67,8 @@
             "description": "Персональний кабінет",
             "children": [
                 {
-                    "label": "Кабінет",
-                    "path": "/cabinet",
-                    "is_authorized": true
-                },
-                {
-                    "label": "Інтереси",
-                    "path": "/cabinet",
-                    "is_authorized": true
-                },
-                {
-                    "label": "Внесок",
-                    "path": "/contribution",
+                    "label": "Запити",
+                    "path": "/requests",
                     "is_authorized": true
                 }
             ]

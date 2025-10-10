@@ -39,8 +39,8 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull }) => {
   if (status === "unauthenticated") {
     return (
       <Button
-        onClick={() => signIn("google")}
-        className="rounded-md border border-gray-300 bg-white text-gray-700 font-sans text-sm h-10 px-3 flex items-center justify-between relative w-auto hover:bg-blue-50 focus:bg-blue-50 active:bg-blue-100 hover:border-blue-200 focus:border-blue-200 transition-colors duration-200"
+        onPress={() => signIn("google")}
+        className="rounded-md border border-gray-300 bg-background hover:bg-foreground text-foreground hover:text-background font-sans text-sm h-10 px-3 flex items-center justify-between relative w-auto transition-colors duration-200"
       >
         <div className="flex items-center justify-between w-full h-full relative">
           <div className="block mr-2 h-[18px] w-[18px]">
