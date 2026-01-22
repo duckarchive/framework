@@ -1,6 +1,6 @@
 {
   "name": "@duckarchive/framework",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Framework with shared components for duckarchive applications",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
