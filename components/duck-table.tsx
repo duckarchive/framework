@@ -70,22 +70,24 @@ const DuckTable = <T,>({
 
   return (
     <>
-      <div className="flex justify-between items-center h-10">
-        <div className="flex gap-1">
-          {filters?.map((filter) => (
-            <Button
-              key={filter.id}
-              radius="full"
-              color="primary"
-              size="sm"
-              variant={activeFilterId === filter.id ? "solid" : "bordered"}
-              onPress={handleFilterClick(filter.id)}
-            >
-              {filter.title}
-            </Button>
-          ))}
+      {filters && filters.length > 0 && (
+        <div className="flex justify-between items-center h-10">
+          <div className="flex gap-1">
+            {filters.map((filter) => (
+              <Button
+                key={filter.id}
+                radius="full"
+                color="primary"
+                size="sm"
+                variant={activeFilterId === filter.id ? "solid" : "bordered"}
+                onPress={handleFilterClick(filter.id)}
+              >
+                {filter.title}
+              </Button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <div className="h-96 flex-grow">
         <AgGridReact
           ref={agGridRef}
