@@ -21,7 +21,7 @@ export const sortCode = (a: string, b: string) => {
     const rest = str.slice(prefix.length);
 
     // 2️⃣ numeric part + whole postfix
-    const [, numTxt = "", postfix = ""] = rest.match(/^(\d+)(.*)$/) || [];
+    const [, numTxt = "", postfix = ""] = rest.match(/(\d+)(.*)$/) || [];
     const num = +numTxt;
 
     // 3️⃣ hasPost flag (0: none, 1: has postfix)
