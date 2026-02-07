@@ -12,6 +12,8 @@ interface DuckTableProps<T> extends GridOptions<T> {
     setActiveFilterId: (id: string | undefined) => void;
     isLoading?: boolean;
     loadingPage?: number;
+    id?: string;
+    persistColWidth?: boolean;
 }
-declare const DuckTable: <T>({ appTheme, columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, ...agGridProps }: DuckTableProps<T>) => import("react/jsx-runtime").JSX.Element;
+declare const DuckTable: <T>({ appTheme, columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, id, persistColWidth, ...agGridProps }: DuckTableProps<T>) => import("react/jsx-runtime").JSX.Element;
 export default DuckTable;
