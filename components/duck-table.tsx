@@ -26,6 +26,8 @@ interface DuckTableProps<T> extends GridOptions<T> {
   setActiveFilterId: (id: string | undefined) => void;
   isLoading?: boolean;
   loadingPage?: number;
+  id?: string;
+  persistColWidth?: boolean;
 }
 
 const DuckTable = <T,>({
@@ -37,9 +39,52 @@ const DuckTable = <T,>({
   filters,
   activeFilterId,
   setActiveFilterId,
+  id,
+  persistColWidth = true,
   ...agGridProps
 }: DuckTableProps<T>) => {
   const agGridRef = useRef<AgGridReact<T>>(null);
+
+  const getStorageKey = () => `duck-table-col-widths-${id}`;
+
+  const saveColumnWidths = () => {
+    if (!persistColWidth || !id || !agGridRef.current?.api) {
+      return;
+    }
+    const columnWidths: Record<string, number> = {};
+    agGridRef.current.api.getColumns()?.forEach((col) => {
+      const columnId = col.getColId();
+      const width = col.getActualWidth();
+      columnWidths[columnId] = width;
+    });
+    localStorage.setItem(getStorageKey(), JSON.stringify(columnWidths));
+  };
+
+  const restoreColumnWidths = () => {
+    if (!persistColWidth || !id || !agGridRef.current?.api) {
+      return;
+    }
+    const stored = localStorage.getItem(getStorageKey());
+    if (stored) {
+      try {
+        const columnWidths = JSON.parse(stored);
+        const widthUpdates = Object.entries(columnWidths).map(
+          ([key, newWidth]) => ({
+            key,
+            newWidth: newWidth as number,
+          }),
+        );
+        agGridRef.current?.api.setColumnWidths(widthUpdates);
+      } catch {
+        // If parsing fails, silently skip restoration
+      }
+    }
+  };
+
+  useEffect(() => {
+    restoreColumnWidths();
+  }, [id, persistColWidth]);
+
   useEffect(() => {
     if (!agGridRef.current?.api) {
       return;
@@ -48,7 +93,7 @@ const DuckTable = <T,>({
       agGridRef.current.api
         .setColumnFilterModel(
           "code",
-          filters?.find(({ id }) => id === activeFilterId)?.value
+          filters?.find(({ id }) => id === activeFilterId)?.value,
         )
         .then(() => {
           agGridRef.current?.api.onFilterChanged();
@@ -104,6 +149,7 @@ const DuckTable = <T,>({
           enableCellTextSelection
           paginationPageSize={50}
           alwaysShowVerticalScroll
+          onColumnResized={saveColumnWidths}
           defaultColDef={{
             resizable: true,
             minWidth: 100,
