@@ -9,8 +9,11 @@ import { Button } from "@heroui/button";
 const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, id, persistColWidth = true, ...agGridProps }) => {
     const agGridRef = useRef(null);
     const getStorageKey = () => `duck-table-col-widths-${id}`;
-    const saveColumnWidths = () => {
-        if (!persistColWidth || !id || !agGridRef.current?.api) {
+    const saveColumnWidths = (event) => {
+        if (!persistColWidth ||
+            !id ||
+            !agGridRef.current?.api ||
+            event.source === "flex") {
             return;
         }
         const columnWidths = {};
@@ -41,7 +44,9 @@ const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, 
         }
     };
     useEffect(() => {
-        restoreColumnWidths();
+        setTimeout(() => {
+            restoreColumnWidths();
+        }, 100);
     }, [id, persistColWidth]);
     useEffect(() => {
         if (!agGridRef.current?.api) {
