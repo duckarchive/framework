@@ -7,6 +7,7 @@ import {
   themeQuartz,
   colorSchemeDark,
   GridOptions,
+  ColumnResizedEvent,
 } from "ag-grid-community";
 import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
@@ -47,8 +48,13 @@ const DuckTable = <T,>({
 
   const getStorageKey = () => `duck-table-col-widths-${id}`;
 
-  const saveColumnWidths = () => {
-    if (!persistColWidth || !id || !agGridRef.current?.api) {
+  const saveColumnWidths = (event: ColumnResizedEvent<T, any>) => {
+    if (
+      !persistColWidth ||
+      !id ||
+      !agGridRef.current?.api ||
+      event.source === "flex"
+    ) {
       return;
     }
     const columnWidths: Record<string, number> = {};
@@ -82,7 +88,9 @@ const DuckTable = <T,>({
   };
 
   useEffect(() => {
-    restoreColumnWidths();
+    setTimeout(() => {
+      restoreColumnWidths();
+    }, 100);
   }, [id, persistColWidth]);
 
   useEffect(() => {
