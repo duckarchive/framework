@@ -1,28 +1,18 @@
 "use client";
-import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx } from "react/jsx-runtime";
 import { Select, SelectItem } from "@heroui/select";
+import { Avatar } from "@heroui/avatar";
 import { useRouter, usePathname } from "next/navigation";
 import { useMemo } from "react";
 // Strict locale to flag emoji map
-const LOCALE_FLAG_MAP = {
-    uk: "🇺🇦",
-    en: "🇬🇧",
-    es: "🇪🇸",
-    it: "🇮🇹",
-    pl: "🇵🇱",
-    ro: "🇷🇴",
-    cz: "🇨🇿",
-};
-// Convert locale code to flag emoji with fallback to charCodeAt
-const getCountryFlag = (locale) => {
-    if (LOCALE_FLAG_MAP[locale]) {
-        return LOCALE_FLAG_MAP[locale];
-    }
-    // Fallback to charCodeAt method
-    const code = locale.split("-")[0].toUpperCase();
-    if (code.length !== 2)
-        return locale;
-    return String.fromCodePoint(127397 + code.charCodeAt(0), 127397 + code.charCodeAt(1));
+const LOCALE_TO_COUNTRY = {
+    uk: "ua",
+    en: "gb",
+    es: "es",
+    it: "it",
+    pl: "pl",
+    ro: "ro",
+    cz: "cz",
 };
 export const SelectLocale = ({ locales, ...selectProps }) => {
     const router = useRouter();
@@ -50,5 +40,5 @@ export const SelectLocale = ({ locales, ...selectProps }) => {
         }
         return "uk"; // default locale
     }, [pathname, locales]);
-    return (_jsx(Select, { variant: "bordered", className: "w-24", selectedKeys: activeLocale ? [activeLocale] : [], onChange: (e) => handleLocaleChange(e.target.value), "aria-label": "DuckNav select locale", ...selectProps, children: locales.map((locale) => (_jsxs(SelectItem, { children: [getCountryFlag(locale), " ", locale.toUpperCase()] }, locale))) }));
+    return (_jsx(Select, { variant: "bordered", className: "w-24", defaultSelectedKeys: activeLocale ? [activeLocale] : [], onChange: (e) => handleLocaleChange(e.target.value), "aria-label": "DuckNav select locale", ...selectProps, children: locales.map((locale) => (_jsx(SelectItem, { startContent: _jsx(Avatar, { alt: locale, className: "w-6 h-6", src: `https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg` }), children: locale.toUpperCase() }, locale))) }));
 };
