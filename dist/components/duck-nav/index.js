@@ -146,11 +146,11 @@ const DuckNav = ({ siteUrl, locales, activeLocale, }) => {
                                 }
                                 return true;
                             })
-                                .map((item) => (_jsx(NavbarItem, { isActive: pathname.startsWith(item.path), className: "px-0", children: _jsx(NavLink, { href: item.path, children: item.label }) }, item.path))) }) })] }), _jsxs(NavbarContent, { className: "basis-1 pl-4", justify: "end", children: [_jsx(Link, { isExternal: true, "aria-label": "Support Project", className: "text-default-500", href: config.links.sponsor, children: _jsx(HeartFilledIcon, { className: "text-danger" }) }), _jsx(Link, { isExternal: true, "aria-label": "Telegram Chat", className: "text-default-500", href: config.links.telegram, children: _jsx(FaTelegram, { size: 20 }) }), _jsx(ThemeSwitch, {}), locales && locales.length > 0 && (_jsx(SelectLocale, { className: "hidden lg:flex", locales: locales, activeLocale: activeLocale })), _jsx(NavbarItem, { className: "hidden lg:flex", style: {
+                                .map((item) => (_jsx(NavbarItem, { isActive: pathname.startsWith(item.path), className: "px-0", children: _jsx(NavLink, { href: item.path, children: item.label }) }, item.path))) }) })] }), _jsxs(NavbarContent, { className: "basis-1 pl-4", justify: "end", children: [_jsx(Link, { isExternal: true, "aria-label": "Support Project", className: "text-default-500", href: config.links.sponsor, children: _jsx(HeartFilledIcon, { className: "text-danger" }) }), _jsx(Link, { isExternal: true, "aria-label": "Telegram Chat", className: "text-default-500", href: config.links.telegram, children: _jsx(FaTelegram, { size: 20 }) }), _jsx(ThemeSwitch, {}), locales && locales.length > 0 && (_jsx(SelectLocale, { className: "w-24 hidden lg:flex", locales: locales, activeLocale: activeLocale })), _jsx(NavbarItem, { className: "hidden lg:flex", style: {
                             colorScheme: "normal",
                         }, children: _jsx(AuthButton, {}) }), _jsx(NavbarMenuToggle, { className: "lg:hidden" })] }), _jsx(NavbarMenu, { children: _jsxs("ul", { className: "mx-4 mt-2 flex flex-col gap-2", children: [_jsx(NavbarItem, { style: {
                                 colorScheme: "normal",
-                            }, children: _jsx(AuthButton, { isFull: true }) }), _jsx(Divider, {}), currentProject?.children
+                            }, children: _jsx(AuthButton, { isFull: true }) }), _jsx(Divider, { className: "my-4" }), currentProject?.children
                             ?.filter((el) => {
                             if (el.is_authorized) {
                                 return status === "authenticated";

@@ -48,7 +48,7 @@ export const SelectLocale = ({ locales, ...selectProps }) => {
         if (segments.length > 0 && locales.includes(segments[0])) {
             return segments[0];
         }
-        return undefined;
+        return "uk"; // default locale
     }, [pathname, locales]);
     return (_jsx(Select, { variant: "bordered", className: "w-24", selectedKeys: activeLocale ? [activeLocale] : [], onChange: (e) => handleLocaleChange(e.target.value), "aria-label": "DuckNav select locale", ...selectProps, children: locales.map((locale) => (_jsxs(SelectItem, { children: [getCountryFlag(locale), " ", locale.toUpperCase()] }, locale))) }));
 };
