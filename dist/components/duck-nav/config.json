@@ -29,13 +29,6 @@
             ]
         },
         {
-            "label": "Каталог",
-            "icon": "lake",
-            "url": "https://catalog.duckarchive.com",
-            "description": "Пошук архівних справ",
-            "is_disabled": true
-        },
-        {
             "label": "Ключ",
             "icon": "key",
             "url": "https://index.duckarchive.com",

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { DuckIcon } from "./icons";
 import NextLink from "next/link";
 import { Link } from "@heroui/link";
+import { useTranslations } from "next-intl";
 
 interface Project {
   url: string;
@@ -17,12 +18,20 @@ interface SelectProjectProps {
   currentProject?: Project;
 }
 
-const SelectProject: React.FC<SelectProjectProps> = ({ projects, currentProject }) => {
+const SelectProject: React.FC<SelectProjectProps> = ({
+  projects,
+  currentProject,
+}) => {
+  const t = useTranslations("project");
   const filteredProjects = useMemo(
     () => projects.filter((p) => p.url !== currentProject?.url),
-    [projects, currentProject]
+    [projects, currentProject],
   );
-  
+
+  if (!currentProject) {
+    return null;
+  }
+
   return (
     <>
       <style>
@@ -43,8 +52,11 @@ const SelectProject: React.FC<SelectProjectProps> = ({ projects, currentProject 
         className="flex justify-start items-center gap-2 text-transparent hover:text-[#F97316]"
         href="/"
       >
-        <DuckIcon name={currentProject?.icon} className="duration-200 stroke-foreground" />
-        <p className="font-bold text-foreground">{currentProject?.label}</p>
+        <DuckIcon
+          name={currentProject?.icon}
+          className="duration-200 stroke-foreground"
+        />
+        <p className="font-bold text-foreground">{t(currentProject?.label)}</p>
       </Link>
       <ul
         id="projects"
@@ -59,10 +71,19 @@ const SelectProject: React.FC<SelectProjectProps> = ({ projects, currentProject 
               href={project.url}
               isDisabled={project.is_disabled}
             >
-              {project.icon && <DuckIcon name={project.icon} className="duration-200 stroke-foreground" />}
+              {project.icon && (
+                <DuckIcon
+                  name={project.icon}
+                  className="duration-200 stroke-foreground"
+                />
+              )}
               <div>
-                <p className="font-medium text-base leading-tight text-foreground">{project.label}</p>
-                <p className="opacity-80 text-sm leading-none text-foreground">{project.description}</p>
+                <p className="font-medium text-base leading-tight text-foreground">
+                  {project.label}
+                </p>
+                <p className="opacity-80 text-sm leading-none text-foreground">
+                  {project.description}
+                </p>
               </div>
             </Link>
           </li>

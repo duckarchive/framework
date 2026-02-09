@@ -1,29 +1,29 @@
 {
   "projects": [
     {
-      "label": "Інспектор",
+      "label": "name",
       "icon": "inspector",
       "url": "https://inspector.duckarchive.com",
-      "description": "Пошук справ онлайн",
+      "description": "short-description",
       "children": [
         {
-          "label": "Пошук",
+          "label": "search",
           "path": "/search"
         },
         {
-          "label": "Архіви",
+          "label": "archives",
           "path": "/archives"
         },
         {
-          "label": "Джерела",
+          "label": "resources",
           "path": "/resources"
         },
         {
-          "label": "Звіт за день",
+          "label": "daily-updates",
           "path": "/daily-updates"
         },
         {
-          "label": "Статистика",
+          "label": "stats",
           "path": "/stats"
         }
       ]

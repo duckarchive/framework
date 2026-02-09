@@ -24,6 +24,7 @@ import SelectProject from "./select-project";
 import { Divider } from "@heroui/divider";
 import AuthButton from "./auth-button";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 const LINK_CLASS =
   "text-base underline-offset-4 hover:underline hover:opacity-70";
@@ -44,14 +45,10 @@ const NavLink: React.FC<LinkProps> = (props) => (
 interface DuckNavProps {
   siteUrl: string;
   locales?: string[];
-  activeLocale?: string;
 }
 
-const DuckNav: React.FC<DuckNavProps> = ({
-  siteUrl,
-  locales,
-  activeLocale,
-}) => {
+const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales }) => {
+  const t = useTranslations("navigation");
   const { status } = useSession();
   const originSiteUrl = siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -102,7 +99,7 @@ const DuckNav: React.FC<DuckNavProps> = ({
                   isActive={pathname.startsWith(item.path)}
                   className="px-0"
                 >
-                  <NavLink href={item.path}>{item.label}</NavLink>
+                  <NavLink href={item.path}>{t(item.label)}</NavLink>
                 </NavbarItem>
               ))}
           </ul>
@@ -128,11 +125,7 @@ const DuckNav: React.FC<DuckNavProps> = ({
         </Link>
         <ThemeSwitch />
         {locales && locales.length > 0 && (
-          <SelectLocale
-            className="w-24 hidden lg:flex"
-            locales={locales}
-            activeLocale={activeLocale}
-          />
+          <SelectLocale className="w-24 hidden lg:flex" locales={locales} />
         )}
         <NavbarItem
           className="hidden lg:flex"
@@ -171,16 +164,12 @@ const DuckNav: React.FC<DuckNavProps> = ({
                   href={item.path}
                   onPress={() => setIsMenuOpen((prev) => !prev)}
                 >
-                  {item.label}
+                  {t(item.label)}
                 </NavLink>
               </NavbarMenuItem>
             ))}
           {locales && locales.length > 0 && (
-            <SelectLocale
-              locales={locales}
-              activeLocale={activeLocale}
-              className="w-full"
-            />
+            <SelectLocale locales={locales} className="w-full" />
           )}
         </ul>
       </NavbarMenu>
