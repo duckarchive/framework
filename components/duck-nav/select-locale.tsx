@@ -2,6 +2,7 @@
 
 import { Select, SelectItem, SelectProps } from "@heroui/select";
 import { useRouter, usePathname } from "next/navigation";
+import { useMemo } from "react";
 
 interface SelectLocaleProps extends Partial<SelectProps> {
   locales: string[];
@@ -36,7 +37,6 @@ const getCountryFlag = (locale: string): string => {
 
 export const SelectLocale: React.FC<SelectLocaleProps> = ({
   locales,
-  activeLocale,
   ...selectProps
 }) => {
   const router = useRouter();
@@ -57,6 +57,15 @@ export const SelectLocale: React.FC<SelectLocaleProps> = ({
       router.push(newPathname);
     }
   };
+
+  // get active locale from pathname
+  const activeLocale = useMemo(() => {
+    const segments = pathname.split("/").filter(Boolean);
+    if (segments.length > 0 && locales.includes(segments[0])) {
+      return segments[0];
+    }
+    return undefined;
+  }, [pathname, locales]);
 
   return (
     <Select
