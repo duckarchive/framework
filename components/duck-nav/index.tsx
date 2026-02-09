@@ -156,14 +156,12 @@ interface DuckNavProps {
   siteUrl: string;
   locales?: string[];
   activeLocale?: string;
-  onLocaleChange?: (locale: string) => void;
 }
 
 const DuckNav: React.FC<DuckNavProps> = ({
   siteUrl,
   locales,
   activeLocale,
-  onLocaleChange,
 }) => {
   const { status } = useSession();
   const originSiteUrl = siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl;
@@ -200,7 +198,7 @@ const DuckNav: React.FC<DuckNavProps> = ({
             currentProject={currentProject}
           />
         </NavbarBrand>
-        <NavbarItem className="hidden md:flex ml-2">
+        <NavbarItem className="hidden lg:flex ml-2">
           <ul className="flex gap-4 justify-start">
             {currentProject?.children
               ?.filter((el: any) => {
@@ -242,21 +240,20 @@ const DuckNav: React.FC<DuckNavProps> = ({
         <ThemeSwitch />
         {locales && locales.length > 0 && (
           <SelectLocale
+            className="hidden lg:flex"
             locales={locales}
             activeLocale={activeLocale}
-            onLocaleChange={onLocaleChange}
           />
         )}
-        {/* <LocaleSelector /> */}
         <NavbarItem
-          className="hidden md:flex"
+          className="hidden lg:flex"
           style={{
             colorScheme: "normal",
           }}
         >
           <AuthButton />
         </NavbarItem>
-        <NavbarMenuToggle className="md:hidden" />
+        <NavbarMenuToggle className="lg:hidden" />
       </NavbarContent>
 
       <NavbarMenu>
@@ -267,8 +264,8 @@ const DuckNav: React.FC<DuckNavProps> = ({
             }}
           >
             <AuthButton isFull />
-            <Divider className="my-4" />
           </NavbarItem>
+          <Divider />
           {currentProject?.children
             ?.filter((el: any) => {
               if (el.is_authorized) {
@@ -289,6 +286,13 @@ const DuckNav: React.FC<DuckNavProps> = ({
                 </NavLink>
               </NavbarMenuItem>
             ))}
+          {locales && locales.length > 0 && (
+            <SelectLocale
+              locales={locales}
+              activeLocale={activeLocale}
+              className="w-full"
+            />
+          )}
         </ul>
       </NavbarMenu>
     </Navbar>
