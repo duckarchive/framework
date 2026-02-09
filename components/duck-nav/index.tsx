@@ -16,6 +16,7 @@ import { FaTelegram } from "react-icons/fa";
 
 import { ThemeSwitch } from "./theme-switch";
 import { HeartFilledIcon } from "./icons";
+import { SelectLocale } from "./select-locale";
 import { useState, useEffect, useMemo } from "react";
 import config from "./config.json";
 import { usePathname } from "next/navigation";
@@ -153,9 +154,17 @@ const NavLink: React.FC<LinkProps> = (props) => (
 
 interface DuckNavProps {
   siteUrl: string;
+  locales?: string[];
+  activeLocale?: string;
+  onLocaleChange?: (locale: string) => void;
 }
 
-const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
+const DuckNav: React.FC<DuckNavProps> = ({
+  siteUrl,
+  locales,
+  activeLocale,
+  onLocaleChange,
+}) => {
   const { status } = useSession();
   const originSiteUrl = siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -174,7 +183,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
 
   const currentProject = useMemo(
     () => config.projects.find((p) => p.url === originSiteUrl),
-    [config.projects, originSiteUrl]
+    [config.projects, originSiteUrl],
   );
 
   return (
@@ -231,6 +240,13 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl }) => {
           <FaTelegram size={20} />
         </Link>
         <ThemeSwitch />
+        {locales && locales.length > 0 && (
+          <SelectLocale
+            locales={locales}
+            activeLocale={activeLocale}
+            onLocaleChange={onLocaleChange}
+          />
+        )}
         {/* <LocaleSelector /> */}
         <NavbarItem
           className="hidden md:flex"
