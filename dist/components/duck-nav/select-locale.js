@@ -23,7 +23,7 @@ const getCountryFlag = (locale) => {
         return locale;
     return String.fromCodePoint(127397 + code.charCodeAt(0), 127397 + code.charCodeAt(1));
 };
-export const SelectLocale = ({ locales, activeLocale, }) => {
+export const SelectLocale = ({ locales, activeLocale, ...selectProps }) => {
     const router = useRouter();
     const pathname = usePathname();
     const handleLocaleChange = (newLocale) => {
@@ -41,5 +41,5 @@ export const SelectLocale = ({ locales, activeLocale, }) => {
             router.push(newPathname);
         }
     };
-    return (_jsx(Select, { size: "sm", variant: "bordered", className: "w-24", selectedKeys: activeLocale ? [activeLocale] : [], onChange: (e) => handleLocaleChange(e.target.value), "aria-label": "Select locale", children: locales.map((locale) => (_jsxs(SelectItem, { children: [getCountryFlag(locale), " ", locale.toUpperCase()] }, locale))) }));
+    return (_jsx(Select, { variant: "bordered", className: "w-24", selectedKeys: activeLocale ? [activeLocale] : [], onChange: (e) => handleLocaleChange(e.target.value), "aria-label": "DuckNav select locale", ...selectProps, children: locales.map((locale) => (_jsxs(SelectItem, { children: [getCountryFlag(locale), " ", locale.toUpperCase()] }, locale))) }));
 };

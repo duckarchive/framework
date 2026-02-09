@@ -1,4 +1,5 @@
-interface SelectLocaleProps {
+import { SelectProps } from "@heroui/select";
+interface SelectLocaleProps extends Partial<SelectProps> {
     locales: string[];
     activeLocale?: string;
 }
