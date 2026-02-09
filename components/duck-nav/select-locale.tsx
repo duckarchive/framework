@@ -1,6 +1,7 @@
 "use client";
 
 import { Select, SelectItem, SelectProps } from "@heroui/select";
+import { Avatar } from "@heroui/avatar";
 import { useRouter, usePathname } from "next/navigation";
 import { useMemo } from "react";
 
@@ -10,29 +11,14 @@ interface SelectLocaleProps extends Partial<SelectProps> {
 }
 
 // Strict locale to flag emoji map
-const LOCALE_FLAG_MAP: Record<string, string> = {
-  uk: "🇺🇦",
-  en: "🇬🇧",
-  es: "🇪🇸",
-  it: "🇮🇹",
-  pl: "🇵🇱",
-  ro: "🇷🇴",
-  cz: "🇨🇿",
-};
-
-// Convert locale code to flag emoji with fallback to charCodeAt
-const getCountryFlag = (locale: string): string => {
-  if (LOCALE_FLAG_MAP[locale]) {
-    return LOCALE_FLAG_MAP[locale];
-  }
-
-  // Fallback to charCodeAt method
-  const code = locale.split("-")[0].toUpperCase();
-  if (code.length !== 2) return locale;
-  return String.fromCodePoint(
-    127397 + code.charCodeAt(0),
-    127397 + code.charCodeAt(1),
-  );
+const LOCALE_TO_COUNTRY: Record<string, string> = {
+  uk: "ua",
+  en: "gb",
+  es: "es",
+  it: "it",
+  pl: "pl",
+  ro: "ro",
+  cz: "cz",
 };
 
 export const SelectLocale: React.FC<SelectLocaleProps> = ({
@@ -71,14 +57,23 @@ export const SelectLocale: React.FC<SelectLocaleProps> = ({
     <Select
       variant="bordered"
       className="w-24"
-      selectedKeys={activeLocale ? [activeLocale] : []}
+      defaultSelectedKeys={activeLocale ? [activeLocale] : []}
       onChange={(e: any) => handleLocaleChange(e.target.value)}
       aria-label="DuckNav select locale"
       {...selectProps}
     >
       {locales.map((locale) => (
-        <SelectItem key={locale}>
-          {getCountryFlag(locale)} {locale.toUpperCase()}
+        <SelectItem
+          key={locale}
+          startContent={
+            <Avatar
+              alt={locale}
+              className="w-6 h-6"
+              src={`https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg`}
+            />
+          }
+        >
+          {locale.toUpperCase()}
         </SelectItem>
       ))}
     </Select>
