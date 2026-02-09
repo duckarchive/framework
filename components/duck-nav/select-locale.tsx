@@ -64,7 +64,7 @@ export const SelectLocale: React.FC<SelectLocaleProps> = ({
     if (segments.length > 0 && locales.includes(segments[0])) {
       return segments[0];
     }
-    return undefined;
+    return "uk"; // default locale
   }, [pathname, locales]);
 
   return (

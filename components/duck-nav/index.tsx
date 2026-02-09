@@ -240,7 +240,7 @@ const DuckNav: React.FC<DuckNavProps> = ({
         <ThemeSwitch />
         {locales && locales.length > 0 && (
           <SelectLocale
-            className="hidden lg:flex"
+            className="w-24 hidden lg:flex"
             locales={locales}
             activeLocale={activeLocale}
           />
@@ -265,7 +265,7 @@ const DuckNav: React.FC<DuckNavProps> = ({
           >
             <AuthButton isFull />
           </NavbarItem>
-          <Divider />
+          <Divider className="my-4" />
           {currentProject?.children
             ?.filter((el: any) => {
               if (el.is_authorized) {
