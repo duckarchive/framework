@@ -1,32 +1,10 @@
 {
   "projects": [
     {
-      "label": "name",
+      "label": "Інспектор",
       "icon": "inspector",
       "url": "https://inspector.duckarchive.com",
-      "description": "short-description",
-      "children": [
-        {
-          "label": "search",
-          "path": "/search"
-        },
-        {
-          "label": "archives",
-          "path": "/archives"
-        },
-        {
-          "label": "resources",
-          "path": "/resources"
-        },
-        {
-          "label": "daily-updates",
-          "path": "/daily-updates"
-        },
-        {
-          "label": "stats",
-          "path": "/stats"
-        }
-      ]
+      "description": "Міжархівний пошук справ"
     },
     {
       "label": "Ключ",

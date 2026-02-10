@@ -24,7 +24,6 @@ import SelectProject from "./select-project";
 import { Divider } from "@heroui/divider";
 import AuthButton from "./auth-button";
 import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
 
 const LINK_CLASS =
   "text-base underline-offset-4 hover:underline hover:opacity-70";
@@ -42,13 +41,19 @@ const NavLink: React.FC<LinkProps> = (props) => (
   </Link>
 );
 
+export interface DuckNavItem {
+  label: string;
+  path: string;
+  is_authorized?: boolean;
+}
+
 interface DuckNavProps {
   siteUrl: string;
   locales?: string[];
+  items: DuckNavItem[];
 }
 
-const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales }) => {
-  const t = useTranslations("navigation");
+const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
   const { status } = useSession();
   const originSiteUrl = siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -86,8 +91,8 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales }) => {
         </NavbarBrand>
         <NavbarItem className="hidden lg:flex ml-2">
           <ul className="flex gap-4 justify-start">
-            {currentProject?.children
-              ?.filter((el: any) => {
+            {items
+              ?.filter((el: DuckNavItem) => {
                 if (el.is_authorized) {
                   return status === "authenticated";
                 }
@@ -99,7 +104,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales }) => {
                   isActive={pathname.startsWith(item.path)}
                   className="px-0"
                 >
-                  <NavLink href={item.path}>{t(item.label)}</NavLink>
+                  <NavLink href={item.path}>{item.label}</NavLink>
                 </NavbarItem>
               ))}
           </ul>
@@ -148,8 +153,8 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales }) => {
             <AuthButton isFull />
           </NavbarItem>
           <Divider className="my-4" />
-          {currentProject?.children
-            ?.filter((el: any) => {
+          {items
+            ?.filter((el: DuckNavItem) => {
               if (el.is_authorized) {
                 return status === "authenticated";
               }
@@ -164,7 +169,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales }) => {
                   href={item.path}
                   onPress={() => setIsMenuOpen((prev) => !prev)}
                 >
-                  {t(item.label)}
+                  {item.label}
                 </NavLink>
               </NavbarMenuItem>
             ))}

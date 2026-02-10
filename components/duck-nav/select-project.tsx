@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { DuckIcon } from "./icons";
 import NextLink from "next/link";
 import { Link } from "@heroui/link";
-import { useTranslations } from "next-intl";
 
 interface Project {
   url: string;
@@ -22,7 +21,6 @@ const SelectProject: React.FC<SelectProjectProps> = ({
   projects,
   currentProject,
 }) => {
-  const t = useTranslations("project");
   const filteredProjects = useMemo(
     () => projects.filter((p) => p.url !== currentProject?.url),
     [projects, currentProject],
@@ -56,7 +54,7 @@ const SelectProject: React.FC<SelectProjectProps> = ({
           name={currentProject?.icon}
           className="duration-200 stroke-foreground"
         />
-        <p className="font-bold text-foreground">{t(currentProject?.label)}</p>
+        <p className="font-bold text-foreground">{currentProject?.label}</p>
       </Link>
       <ul
         id="projects"
