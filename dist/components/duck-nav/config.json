@@ -4,29 +4,7 @@
             "label": "Інспектор",
             "icon": "inspector",
             "url": "https://inspector.duckarchive.com",
-            "description": "Пошук справ онлайн",
-            "children": [
-                {
-                    "label": "Пошук",
-                    "path": "/search"
-                },
-                {
-                    "label": "Архіви",
-                    "path": "/archives"
-                },
-                {
-                    "label": "Джерела",
-                    "path": "/resources"
-                },
-                {
-                    "label": "Звіт за день",
-                    "path": "/daily-updates"
-                },
-                {
-                    "label": "Статистика",
-                    "path": "/stats"
-                }
-            ]
+            "description": "Міжархівний пошук справ"
         },
         {
             "label": "Ключ",
