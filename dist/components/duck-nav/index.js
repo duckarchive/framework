@@ -15,6 +15,7 @@ import SelectProject from "./select-project";
 import { Divider } from "@heroui/divider";
 import AuthButton from "./auth-button";
 import { useSession } from "next-auth/react";
+import { Button } from "@heroui/button";
 const LINK_CLASS = "text-base underline-offset-4 hover:underline hover:opacity-70";
 const NavLink = (props) => (_jsx(Link, { as: NextLink, color: "foreground", target: props.href?.startsWith("https") ? "_blank" : undefined, href: props.href, className: clsx(LINK_CLASS, props.className), ...props, children: props.children }));
 const DuckNav = ({ siteUrl, locales, items }) => {
@@ -31,25 +32,33 @@ const DuckNav = ({ siteUrl, locales, items }) => {
     if (isInIframe) {
         return null;
     }
+    // get active locale from pathname
+    const activeLocale = useMemo(() => {
+        const segments = pathname.split("/").filter(Boolean);
+        if (segments.length > 0 && locales?.includes(segments[0])) {
+            return segments[0];
+        }
+        return "uk"; // default locale
+    }, [pathname, locales]);
     const currentProject = useMemo(() => config.projects.find((p) => p.url === originSiteUrl), [config.projects, originSiteUrl]);
-    return (_jsxs(Navbar, { maxWidth: "xl", position: "sticky", isMenuOpen: isMenuOpen, onMenuOpenChange: setIsMenuOpen, children: [_jsxs(NavbarContent, { className: "basis-1/5", justify: "start", children: [_jsx(NavbarBrand, { as: "li", className: "h-full relative grow-0", children: _jsx(SelectProject, { projects: config.projects, currentProject: currentProject }) }), _jsx(NavbarItem, { className: "hidden lg:flex ml-2", children: _jsx("ul", { className: "flex gap-4 justify-start", children: items
+    return (_jsxs(Navbar, { maxWidth: "xl", position: "sticky", isMenuOpen: isMenuOpen, onMenuOpenChange: setIsMenuOpen, children: [_jsxs(NavbarContent, { className: "basis-1/5", justify: "start", children: [_jsx(NavbarBrand, { as: "li", className: "h-full relative grow-0", children: _jsx(SelectProject, { activeLocale: activeLocale, projects: config.projects, currentProject: currentProject }) }), _jsx(NavbarItem, { className: "hidden lg:flex ml-2", children: _jsx("ul", { className: "flex gap-4 justify-start", children: items
                                 ?.filter((el) => {
                                 if (el.is_authorized) {
                                     return status === "authenticated";
                                 }
                                 return true;
                             })
-                                .map((item) => (_jsx(NavbarItem, { isActive: pathname.startsWith(item.path), className: "px-0", children: _jsx(NavLink, { href: item.path, children: item.label }) }, item.path))) }) })] }), _jsxs(NavbarContent, { className: "basis-1 pl-4", justify: "end", children: [_jsx(Link, { isExternal: true, "aria-label": "Support Project", className: "text-default-500", href: config.links.sponsor, children: _jsx(HeartFilledIcon, { className: "text-danger" }) }), _jsx(Link, { isExternal: true, "aria-label": "Telegram Chat", className: "text-default-500", href: config.links.telegram, children: _jsx(FaTelegram, { size: 20 }) }), _jsx(ThemeSwitch, {}), locales && locales.length > 0 && (_jsx(SelectLocale, { className: "w-24 hidden lg:flex", locales: locales })), _jsx(NavbarItem, { className: "hidden lg:flex", style: {
+                                .map((item) => (_jsx(NavbarItem, { isActive: pathname.startsWith(item.path), className: "px-0", children: _jsx(NavLink, { href: item.path, children: item.label }) }, item.path))) }) })] }), _jsxs(NavbarContent, { className: "basis-1 pl-4 gap-2", justify: "end", children: [_jsx(Button, { as: Link, isIconOnly: true, variant: "light", size: "sm", isExternal: true, "aria-label": "Support Project", href: config.links.sponsor, children: _jsx(HeartFilledIcon, { className: "text-danger w-6 h-6" }) }), _jsx(Button, { as: Link, isIconOnly: true, variant: "light", size: "sm", isExternal: true, "aria-label": "Telegram Chat", href: config.links.telegram, children: _jsx(FaTelegram, { className: "text-default-500 w-6 h-6" }) }), _jsx(ThemeSwitch, {}), locales && locales.length > 0 && (_jsx(SelectLocale, { locales: locales, activeLocale: activeLocale })), _jsx(NavbarItem, { className: "hidden lg:flex", style: {
                             colorScheme: "normal",
-                        }, children: _jsx(AuthButton, {}) }), _jsx(NavbarMenuToggle, { className: "lg:hidden" })] }), _jsx(NavbarMenu, { children: _jsxs("ul", { className: "mx-4 mt-2 flex flex-col gap-2", children: [_jsx(NavbarItem, { style: {
+                        }, children: _jsx(AuthButton, { activeLocale: activeLocale }) }), _jsx(NavbarMenuToggle, { className: "lg:hidden" })] }), _jsx(NavbarMenu, { children: _jsxs("ul", { className: "mx-4 mt-2 flex flex-col gap-2", children: [_jsx(NavbarItem, { style: {
                                 colorScheme: "normal",
-                            }, children: _jsx(AuthButton, { isFull: true }) }), _jsx(Divider, { className: "my-4" }), items
+                            }, children: _jsx(AuthButton, { isFull: true, activeLocale: activeLocale }) }), _jsx(Divider, { className: "my-4" }), items
                             ?.filter((el) => {
                             if (el.is_authorized) {
                                 return status === "authenticated";
                             }
                             return true;
                         })
-                            .map((item) => (_jsx(NavbarMenuItem, { isActive: pathname.startsWith(item.path), children: _jsx(NavLink, { href: item.path, onPress: () => setIsMenuOpen((prev) => !prev), children: item.label }) }, `${item.label}`))), locales && locales.length > 0 && (_jsx(SelectLocale, { locales: locales, className: "w-full" }))] }) })] }));
+                            .map((item) => (_jsx(NavbarMenuItem, { isActive: pathname.startsWith(item.path), children: _jsx(NavLink, { href: item.path, onPress: () => setIsMenuOpen((prev) => !prev), children: item.label }) }, `${item.label}`)))] }) })] }));
 };
 export default DuckNav;

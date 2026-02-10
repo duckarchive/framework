@@ -3,6 +3,16 @@ import { DuckIcon } from "./icons";
 import NextLink from "next/link";
 import { Link } from "@heroui/link";
 
+const translations: Record<string, { otherProjects: string }> = {
+  uk: { otherProjects: "Інші проєкти:" },
+  en: { otherProjects: "Other projects:" },
+  es: { otherProjects: "Otros proyectos:" },
+  it: { otherProjects: "Altri progetti:" },
+  pl: { otherProjects: "Inne projekty:" },
+  ro: { otherProjects: "Alte proiecte:" },
+  cz: { otherProjects: "Ostatní projekty:" },
+};
+
 interface Project {
   url: string;
   label: string;
@@ -15,11 +25,13 @@ interface Project {
 interface SelectProjectProps {
   projects: Project[];
   currentProject?: Project;
+  activeLocale: string;
 }
 
 const SelectProject: React.FC<SelectProjectProps> = ({
   projects,
   currentProject,
+  activeLocale,
 }) => {
   const filteredProjects = useMemo(
     () => projects.filter((p) => p.url !== currentProject?.url),
@@ -60,7 +72,9 @@ const SelectProject: React.FC<SelectProjectProps> = ({
         id="projects"
         className="absolute top-14 -left-2 flex flex-col overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:opacity-100 transition-all delay-200"
       >
-        <li className="text-sm leading-none p-2">інші проєкти:</li>
+        <li className="text-sm leading-none p-2">
+          {translations[activeLocale]?.otherProjects}:
+        </li>
         {filteredProjects.map((project) => (
           <li key={project.url}>
             <Link

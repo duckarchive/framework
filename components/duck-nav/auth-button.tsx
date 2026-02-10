@@ -1,10 +1,54 @@
 import { Button } from "@heroui/button";
 import { signIn, signOut, useSession } from "next-auth/react";
+
+// "uk", "en", "pl", "cz", "ro", "es", "it"
+const translations: Record<
+  string,
+  { signIn: string; signOut: string; signedInAs: string }
+> = {
+  uk: {
+    signIn: "Увійти через Google",
+    signOut: "Вийти",
+    signedInAs: "Ви увійшли як:",
+  },
+  en: {
+    signIn: "Sign in with Google",
+    signOut: "Sign out",
+    signedInAs: "Signed in as:",
+  },
+  pl: {
+    signIn: "Zaloguj się przez Google",
+    signOut: "Wyloguj się",
+    signedInAs: "Zalogowany jako:",
+  },
+  cz: {
+    signIn: "Přihlásit se přes Google",
+    signOut: "Odhlásit se",
+    signedInAs: "Přihlášen jako:",
+  },
+  ro: {
+    signIn: "Conectați-vă cu Google",
+    signOut: "Deconectați-vă",
+    signedInAs: "Conectat ca:",
+  },
+  es: {
+    signIn: "Iniciar sesión con Google",
+    signOut: "Cerrar sesión",
+    signedInAs: "Conectado como:",
+  },
+  it: {
+    signIn: "Accedi con Google",
+    signOut: "Disconnettersi",
+    signedInAs: "Connesso come:",
+  },
+};
+
 interface AuthButtonProps {
   isFull?: boolean;
+  activeLocale: string;
 }
 
-const AuthButton: React.FC<AuthButtonProps> = ({ isFull }) => {
+const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
   const { data, status } = useSession();
 
   const handleSignOutClick = () => {
@@ -21,7 +65,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull }) => {
         <div className="flex flex-col">
           {isFull && (
             <span className="text-sm text-gray-500 border-none cursor-pointer">
-              Ви увійшли як:
+              {translations[activeLocale]?.signedInAs}
             </span>
           )}
           <span className="md:text-sm">{data.user?.email}</span>
@@ -30,12 +74,12 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull }) => {
           className="md:text-xs text-gray-500 border-none cursor-pointer"
           onClick={handleSignOutClick}
         >
-          Вийти
+          {translations[activeLocale]?.signOut}
         </span>
       </div>
     );
   }
-  
+
   if (status === "unauthenticated") {
     return (
       <Button
@@ -71,7 +115,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull }) => {
             </svg>
           </div>
           <span className="flex-grow font-sans font-medium overflow-hidden text-ellipsis">
-            Вхід через Google
+            {translations[activeLocale]?.signIn}
           </span>
         </div>
       </Button>

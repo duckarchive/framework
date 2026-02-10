@@ -24,6 +24,7 @@ import SelectProject from "./select-project";
 import { Divider } from "@heroui/divider";
 import AuthButton from "./auth-button";
 import { useSession } from "next-auth/react";
+import { Button } from "@heroui/button";
 
 const LINK_CLASS =
   "text-base underline-offset-4 hover:underline hover:opacity-70";
@@ -70,6 +71,15 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
     return null;
   }
 
+  // get active locale from pathname
+  const activeLocale = useMemo(() => {
+    const segments = pathname.split("/").filter(Boolean);
+    if (segments.length > 0 && locales?.includes(segments[0])) {
+      return segments[0];
+    }
+    return "uk"; // default locale
+  }, [pathname, locales]);
+
   const currentProject = useMemo(
     () => config.projects.find((p) => p.url === originSiteUrl),
     [config.projects, originSiteUrl],
@@ -85,6 +95,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
       <NavbarContent className="basis-1/5" justify="start">
         <NavbarBrand as="li" className="h-full relative grow-0">
           <SelectProject
+            activeLocale={activeLocale}
             projects={config.projects}
             currentProject={currentProject}
           />
@@ -111,26 +122,32 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent className="basis-1 pl-4" justify="end">
-        <Link
+      <NavbarContent className="basis-1 pl-4 gap-2" justify="end">
+        <Button
+          as={Link}
+          isIconOnly
+          variant="light"
+          size="sm"
           isExternal
           aria-label="Support Project"
-          className="text-default-500"
           href={config.links.sponsor}
         >
-          <HeartFilledIcon className="text-danger" />
-        </Link>
-        <Link
+          <HeartFilledIcon className="text-danger w-6 h-6" />
+        </Button>
+        <Button
+          as={Link}
+          isIconOnly
+          variant="light"
+          size="sm"
           isExternal
           aria-label="Telegram Chat"
-          className="text-default-500"
           href={config.links.telegram}
         >
-          <FaTelegram size={20} />
-        </Link>
+          <FaTelegram className="text-default-500 w-6 h-6" />
+        </Button>
         <ThemeSwitch />
         {locales && locales.length > 0 && (
-          <SelectLocale className="w-24 hidden lg:flex" locales={locales} />
+          <SelectLocale locales={locales} activeLocale={activeLocale} />
         )}
         <NavbarItem
           className="hidden lg:flex"
@@ -138,7 +155,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
             colorScheme: "normal",
           }}
         >
-          <AuthButton />
+          <AuthButton activeLocale={activeLocale} />
         </NavbarItem>
         <NavbarMenuToggle className="lg:hidden" />
       </NavbarContent>
@@ -150,7 +167,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
               colorScheme: "normal",
             }}
           >
-            <AuthButton isFull />
+            <AuthButton isFull activeLocale={activeLocale} />
           </NavbarItem>
           <Divider className="my-4" />
           {items
@@ -173,9 +190,6 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
                 </NavLink>
               </NavbarMenuItem>
             ))}
-          {locales && locales.length > 0 && (
-            <SelectLocale locales={locales} className="w-full" />
-          )}
         </ul>
       </NavbarMenu>
     </Navbar>

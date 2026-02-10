@@ -1,9 +1,9 @@
 "use client";
-import { jsx as _jsx } from "react/jsx-runtime";
-import { Select, SelectItem } from "@heroui/select";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, } from "@heroui/dropdown";
+import { Button } from "@heroui/button";
 import { Avatar } from "@heroui/avatar";
 import { useRouter, usePathname } from "next/navigation";
-import { useMemo } from "react";
 // Strict locale to flag emoji map
 const LOCALE_TO_COUNTRY = {
     uk: "ua",
@@ -14,7 +14,17 @@ const LOCALE_TO_COUNTRY = {
     ro: "ro",
     cz: "cz",
 };
-export const SelectLocale = ({ locales, ...selectProps }) => {
+// Strict locale to flag emoji map
+const LOCALE_TO_NAME = {
+    uk: "Українська",
+    en: "English",
+    es: "Español",
+    it: "Italiano",
+    pl: "Polski",
+    ro: "Română",
+    cz: "Čeština",
+};
+export const SelectLocale = ({ locales, activeLocale, ...dropdownProps }) => {
     const router = useRouter();
     const pathname = usePathname();
     const handleLocaleChange = (newLocale) => {
@@ -32,13 +42,5 @@ export const SelectLocale = ({ locales, ...selectProps }) => {
             router.push(newPathname);
         }
     };
-    // get active locale from pathname
-    const activeLocale = useMemo(() => {
-        const segments = pathname.split("/").filter(Boolean);
-        if (segments.length > 0 && locales.includes(segments[0])) {
-            return segments[0];
-        }
-        return "uk"; // default locale
-    }, [pathname, locales]);
-    return (_jsx(Select, { variant: "bordered", className: "w-24", defaultSelectedKeys: activeLocale ? [activeLocale] : [], onChange: (e) => handleLocaleChange(e.target.value), "aria-label": "DuckNav select locale", ...selectProps, children: locales.map((locale) => (_jsx(SelectItem, { startContent: _jsx(Avatar, { alt: locale, className: "w-6 h-6", src: `https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg` }), children: locale.toUpperCase() }, locale))) }));
+    return (_jsxs(Dropdown, { ...dropdownProps, children: [_jsx(DropdownTrigger, { children: _jsx(Button, { isIconOnly: true, variant: "light", size: "sm", "aria-label": "DuckNav select locale", children: _jsx(Avatar, { alt: activeLocale, className: "w-6 h-6", src: `https://flagcdn.com/${LOCALE_TO_COUNTRY[activeLocale]}.svg` }) }) }), _jsx(DropdownMenu, { "aria-label": "Locale selection", onAction: (key) => handleLocaleChange(key), children: locales.map((locale) => (_jsx(DropdownItem, { startContent: _jsx(Avatar, { alt: locale, className: "w-6 h-6", src: `https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg` }), children: LOCALE_TO_NAME[locale] }, locale))) })] }));
 };
