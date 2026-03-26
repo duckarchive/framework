@@ -51,11 +51,20 @@ interface AuthButtonProps {
 const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
   const { data, status } = useSession();
 
+  const handleSignInClick = () => {
+    signIn("google");
+  };
+
   const handleSignOutClick = () => {
     signOut();
   };
 
   if (status === "loading") {
+    return null;
+  }
+
+  if ((data as any)?.error === "RefreshAccessTokenError") {
+    signIn("google");
     return null;
   }
 
@@ -83,7 +92,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
   if (status === "unauthenticated") {
     return (
       <Button
-        onPress={() => signIn("google")}
+        onPress={handleSignInClick}
         className="rounded-md border border-gray-300 bg-background hover:bg-foreground text-foreground hover:text-background font-sans text-sm h-10 px-3 flex items-center justify-between relative w-auto transition-colors duration-200"
       >
         <div className="flex items-center justify-between w-full h-full relative">
