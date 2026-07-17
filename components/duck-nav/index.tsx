@@ -12,7 +12,7 @@ import {
 import { Link, LinkProps } from "@heroui/link";
 import NextLink from "next/link";
 import clsx from "clsx";
-import { FaTelegram } from "react-icons/fa";
+import { FaTelegram, FaWhatsapp } from "react-icons/fa";
 
 import { ThemeSwitch } from "./theme-switch";
 import { HeartFilledIcon } from "./icons";
@@ -140,7 +140,18 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
           variant="light"
           size="sm"
           isExternal
-          aria-label="Telegram Chat"
+          aria-label="WhatsApp Channel"
+          href={config.links.whatsapp}
+        >
+          <FaWhatsapp className="text-default-500 w-6 h-6" />
+        </Button>
+        <Button
+          as={Link}
+          isIconOnly
+          variant="light"
+          size="sm"
+          isExternal
+          aria-label="Telegram Channel"
           href={config.links.telegram}
         >
           <FaTelegram className="text-default-500 w-6 h-6" />
