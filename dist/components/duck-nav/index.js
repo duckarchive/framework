@@ -4,7 +4,7 @@ import { Navbar, NavbarContent, NavbarMenu, NavbarMenuToggle, NavbarBrand, Navba
 import { Link } from "@heroui/link";
 import NextLink from "next/link";
 import clsx from "clsx";
-import { FaTelegram } from "react-icons/fa";
+import { FaTelegram, FaWhatsapp } from "react-icons/fa";
 import { ThemeSwitch } from "./theme-switch";
 import { HeartFilledIcon } from "./icons";
 import { SelectLocale } from "./select-locale";
@@ -48,7 +48,7 @@ const DuckNav = ({ siteUrl, locales, items }) => {
                                 }
                                 return true;
                             })
-                                .map((item) => (_jsx(NavbarItem, { isActive: pathname.startsWith(item.path), className: "px-0", children: _jsx(NavLink, { href: item.path, children: item.label }) }, item.path))) }) })] }), _jsxs(NavbarContent, { className: "basis-1 pl-4 gap-2", justify: "end", children: [_jsx(Button, { as: Link, isIconOnly: true, variant: "light", size: "sm", isExternal: true, "aria-label": "Support Project", href: config.links.sponsor, children: _jsx(HeartFilledIcon, { className: "text-danger w-6 h-6" }) }), _jsx(Button, { as: Link, isIconOnly: true, variant: "light", size: "sm", isExternal: true, "aria-label": "Telegram Chat", href: config.links.telegram, children: _jsx(FaTelegram, { className: "text-default-500 w-6 h-6" }) }), _jsx(ThemeSwitch, {}), locales && locales.length > 0 && (_jsx(SelectLocale, { locales: locales, activeLocale: activeLocale })), _jsx(NavbarItem, { className: "hidden lg:flex", style: {
+                                .map((item) => (_jsx(NavbarItem, { isActive: pathname.startsWith(item.path), className: "px-0", children: _jsx(NavLink, { href: item.path, children: item.label }) }, item.path))) }) })] }), _jsxs(NavbarContent, { className: "basis-1 pl-4 gap-2", justify: "end", children: [_jsx(Button, { as: Link, isIconOnly: true, variant: "light", size: "sm", isExternal: true, "aria-label": "Support Project", href: config.links.sponsor, children: _jsx(HeartFilledIcon, { className: "text-danger w-6 h-6" }) }), _jsx(Button, { as: Link, isIconOnly: true, variant: "light", size: "sm", isExternal: true, "aria-label": "WhatsApp Channel", href: config.links.whatsapp, children: _jsx(FaWhatsapp, { className: "text-default-500 w-6 h-6" }) }), _jsx(Button, { as: Link, isIconOnly: true, variant: "light", size: "sm", isExternal: true, "aria-label": "Telegram Channel", href: config.links.telegram, children: _jsx(FaTelegram, { className: "text-default-500 w-6 h-6" }) }), _jsx(ThemeSwitch, {}), locales && locales.length > 0 && (_jsx(SelectLocale, { locales: locales, activeLocale: activeLocale })), _jsx(NavbarItem, { className: "hidden lg:flex", style: {
                             colorScheme: "normal",
                         }, children: _jsx(AuthButton, { activeLocale: activeLocale }) }), _jsx(NavbarMenuToggle, { className: "lg:hidden" })] }), _jsx(NavbarMenu, { children: _jsxs("ul", { className: "mx-4 mt-2 flex flex-col gap-2", children: [_jsx(NavbarItem, { style: {
                                 colorScheme: "normal",
