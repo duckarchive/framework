@@ -3,13 +3,13 @@ import { useMemo } from "react";
 import { DuckIcon } from "./icons";
 import { Link } from "@heroui/react";
 const translations = {
-    uk: { otherProjects: "Інші проєкти" },
-    en: { otherProjects: "Other projects" },
-    es: { otherProjects: "Otros proyectos" },
-    it: { otherProjects: "Altri progetti" },
-    pl: { otherProjects: "Inne projekty" },
-    ro: { otherProjects: "Alte proiecte" },
-    cz: { otherProjects: "Ostatní projekty" },
+    uk: { otherProjects: "інші проєкти", docs: "Документація" },
+    en: { otherProjects: "other projects", docs: "Documentation" },
+    es: { otherProjects: "otros proyectos", docs: "Documentación" },
+    it: { otherProjects: "altri progetti", docs: "Documentazione" },
+    pl: { otherProjects: "inne projekty", docs: "Dokumentacja" },
+    ro: { otherProjects: "alte proiecte", docs: "Documentație" },
+    cz: { otherProjects: "ostatní projekty", docs: "Dokumentace" },
 };
 const SelectProject = ({ projects, currentProject, activeLocale, }) => {
     const filteredProjects = useMemo(() => projects.filter((p) => p.url !== currentProject?.url), [projects, currentProject]);
@@ -25,6 +25,6 @@ const SelectProject = ({ projects, currentProject, activeLocale, }) => {
           opacity: 1;
           max-height: 1000px;
         }
-      ` }), _jsxs(Link, { id: "logo", className: "flex justify-start items-center gap-2 hover:text-transparent text-[#F97316]", href: "/", children: [_jsx(DuckIcon, { name: currentProject?.icon, className: "duration-200 stroke-foreground" }), _jsx("p", { className: "text-foreground text-2xl font-bold uppercase tracking-tight", children: currentProject?.label })] }), _jsxs("ul", { id: "projects", className: "absolute top-14 -left-2 flex flex-col overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:opacity-100 transition-all delay-200", children: [_jsxs("li", { className: "text-sm leading-none p-2", children: [translations[activeLocale]?.otherProjects, ":"] }), filteredProjects.map((project) => (_jsx("li", { children: _jsxs(Link, { className: "flex justify-start items-center p-2 gap-2 text-transparent hover:text-[#F97316] hover:bg-gray-100 dark:hover:bg-gray-800 py-2 rounded-lg", href: project.url, isDisabled: project.is_disabled, children: [project.icon && (_jsx(DuckIcon, { name: project.icon, className: "duration-200 stroke-foreground" })), _jsxs("div", { children: [_jsx("p", { className: "font-light uppercase tracking-tight text-base leading-tight text-foreground", children: project.label }), _jsx("p", { className: "opacity-50 text-sm leading-none text-foreground", children: project.description })] })] }) }, project.url)))] })] }));
+      ` }), _jsxs(Link, { id: "logo", className: "no-underline flex justify-start items-center gap-2 hover:text-transparent text-[#F97316]", href: "/", children: [_jsx(DuckIcon, { name: currentProject?.icon, className: "duration-200 stroke-foreground" }), _jsx("p", { className: "text-foreground text-2xl font-bold uppercase tracking-tight", children: currentProject?.label })] }), _jsx("div", { id: "projects", className: "dropdown__popover absolute top-11 -left-2 w-64 hover:opacity-100 transition-all delay-200", children: _jsxs("ul", { className: "dropdown__menu flex flex-col overflow-hidden", children: [_jsx("li", { className: "text-xs leading-none p-2", children: translations[activeLocale]?.otherProjects }, "label"), filteredProjects.map((project) => (_jsx("li", { className: "menu-item menu-item--default", children: _jsxs(Link, { className: "no-underline flex justify-start items-center gap-1 text-transparent hover:text-[#F97316]", href: project.url, isDisabled: project.is_disabled, children: [project.icon && (_jsx(DuckIcon, { name: project.icon, className: "duration-200 stroke-foreground" })), _jsxs("div", { children: [_jsx("p", { className: "uppercase tracking-tight font-bold text-base leading-tight text-foreground", children: project.label }), _jsx("p", { className: "text-sm font-thin leading-none text-foreground", children: project.description })] })] }) }, project.url)))] }) })] }));
 };
 export default SelectProject;

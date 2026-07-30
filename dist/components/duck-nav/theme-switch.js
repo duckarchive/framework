@@ -12,5 +12,5 @@ export const ThemeSwitch = () => {
         setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
     };
     const isDark = theme === "dark" && isHydrated;
-    return (_jsx(Button, { isIconOnly: true, variant: "ghost", size: "sm", "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`, onPress: handleThemeChange, children: isDark ? (_jsx(SunFilledIcon, { className: "text-muted w-6 h-6" })) : (_jsx(MoonFilledIcon, { className: "text-muted w-6 h-6" })) }));
+    return (_jsx(Button, { isIconOnly: true, variant: "ghost", size: "sm", "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`, onPress: handleThemeChange, children: isDark ? (_jsx(SunFilledIcon, { className: "w-6 h-6" })) : (_jsx(MoonFilledIcon, { className: "w-6 h-6" })) }));
 };

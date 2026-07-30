@@ -1,7 +1,8 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Dropdown, Avatar, buttonVariants } from "@heroui/react";
+import { Dropdown, buttonVariants } from "@heroui/react";
 import { useRouter, usePathname } from "next/navigation";
+import NextImage from "next/image";
 // Strict locale to flag emoji map
 const LOCALE_TO_COUNTRY = {
     uk: "ua",
@@ -28,8 +29,9 @@ const TRIGGER_CLASS = buttonVariants({
     variant: "ghost",
     size: "sm",
     isIconOnly: true,
+    className: "flex items-center justify-center",
 });
-const LocaleAvatar = ({ locale }) => (_jsxs(Avatar, { className: "w-6 h-6", children: [_jsx(Avatar.Image, { alt: locale, src: `https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg` }), _jsx(Avatar.Fallback, { className: "text-[10px] uppercase", children: locale })] }));
+const LocaleFlag = ({ locale }) => (_jsx(NextImage, { alt: locale, width: 24, height: 24, className: "w-6 h-6 rounded-full object-cover", src: `https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg` }));
 export const SelectLocale = ({ locales, activeLocale, ...dropdownProps }) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -48,5 +50,5 @@ export const SelectLocale = ({ locales, activeLocale, ...dropdownProps }) => {
             router.push(newPathname);
         }
     };
-    return (_jsxs(Dropdown, { ...dropdownProps, children: [_jsx(Dropdown.Trigger, { className: TRIGGER_CLASS, "aria-label": "DuckNav select locale", children: _jsx(LocaleAvatar, { locale: activeLocale }) }), _jsx(Dropdown.Popover, { children: _jsx(Dropdown.Menu, { "aria-label": "Locale selection", onAction: (key) => handleLocaleChange(key), children: locales.map((locale) => (_jsxs(Dropdown.Item, { id: locale, textValue: LOCALE_TO_NAME[locale], className: "flex items-center gap-2", children: [_jsx(LocaleAvatar, { locale: locale }), LOCALE_TO_NAME[locale]] }, locale))) }) })] }));
+    return (_jsxs(Dropdown, { ...dropdownProps, children: [_jsx(Dropdown.Trigger, { className: TRIGGER_CLASS, "aria-label": "DuckNav select locale", children: _jsx(LocaleFlag, { locale: activeLocale }) }), _jsx(Dropdown.Popover, { children: _jsx(Dropdown.Menu, { "aria-label": "Locale selection", onAction: (key) => handleLocaleChange(key), children: locales.map((locale) => (_jsxs(Dropdown.Item, { id: locale, textValue: LOCALE_TO_NAME[locale], className: "flex items-center gap-2", children: [_jsx(LocaleFlag, { locale: locale }), LOCALE_TO_NAME[locale]] }, locale))) }) })] }));
 };
