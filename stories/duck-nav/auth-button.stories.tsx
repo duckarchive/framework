@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import AuthButton from "./auth-button";
+import AuthButton from "../../components/duck-nav/auth-button";
 
 const meta = {
   title: "Components/DuckNav/AuthButton",

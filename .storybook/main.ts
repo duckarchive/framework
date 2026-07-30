@@ -7,7 +7,7 @@ import { mergeConfig } from "vite";
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
-  stories: ["../components/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  stories: ["../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: ["@storybook/addon-docs"],
   framework: "@storybook/nextjs-vite",
   async viteFinal(viteConfig) {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { ThemeSwitch } from "./theme-switch";
+import { ThemeSwitch } from "../../components/duck-nav/theme-switch";
 
 const meta = {
   title: "Components/DuckNav/ThemeSwitch",

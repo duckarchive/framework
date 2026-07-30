@@ -4,13 +4,13 @@ import NextLink from "next/link";
 import { Link } from "@heroui/link";
 
 const translations: Record<string, { otherProjects: string }> = {
-  uk: { otherProjects: "Інші проєкти:" },
-  en: { otherProjects: "Other projects:" },
-  es: { otherProjects: "Otros proyectos:" },
-  it: { otherProjects: "Altri progetti:" },
-  pl: { otherProjects: "Inne projekty:" },
-  ro: { otherProjects: "Alte proiecte:" },
-  cz: { otherProjects: "Ostatní projekty:" },
+  uk: { otherProjects: "Інші проєкти" },
+  en: { otherProjects: "Other projects" },
+  es: { otherProjects: "Otros proyectos" },
+  it: { otherProjects: "Altri progetti" },
+  pl: { otherProjects: "Inne projekty" },
+  ro: { otherProjects: "Alte proiecte" },
+  cz: { otherProjects: "Ostatní projekty" },
 };
 
 interface Project {
@@ -59,14 +59,14 @@ const SelectProject: React.FC<SelectProjectProps> = ({
       <Link
         as={NextLink}
         id="logo"
-        className="flex justify-start items-center gap-2 text-transparent hover:text-[#F97316]"
+        className="flex justify-start items-center gap-2 hover:text-transparent text-[#F97316]"
         href="/"
       >
         <DuckIcon
           name={currentProject?.icon}
           className="duration-200 stroke-foreground"
         />
-        <p className="font-bold text-foreground">{currentProject?.label}</p>
+        <p className="text-foreground text-2xl font-bold uppercase tracking-tight">{currentProject?.label}</p>
       </Link>
       <ul
         id="projects"
@@ -90,10 +90,10 @@ const SelectProject: React.FC<SelectProjectProps> = ({
                 />
               )}
               <div>
-                <p className="font-medium text-base leading-tight text-foreground">
+                <p className="font-light uppercase tracking-tight text-base leading-tight text-foreground">
                   {project.label}
                 </p>
-                <p className="opacity-80 text-sm leading-none text-foreground">
+                <p className="opacity-50 text-sm leading-none text-foreground">
                   {project.description}
                 </p>
               </div>

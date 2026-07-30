@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import DuckLoader from "./duck-loader";
+import DuckLoader from "../components/duck-loader";
 
 const meta = {
   title: "Components/DuckLoader",

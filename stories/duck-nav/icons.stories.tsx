@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { DuckIcon } from "./icons";
+import { DuckIcon } from "../../components/duck-nav/icons";
 
 const ICON_NAMES = ["inspector", "map", "key", "egg", "lake", "foot", "spravna", "dev"];
 

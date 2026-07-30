@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import DuckTableSkeleton from "./duck-table-skeleton";
+import DuckTableSkeleton from "../components/duck-table-skeleton";
 
 const meta = {
   title: "Components/DuckTableSkeleton",

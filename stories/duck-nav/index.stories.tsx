@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import DuckNav, { DuckNavItem } from "./index";
+import DuckNav, { DuckNavItem } from "../../components/duck-nav/index";
 
 const items: DuckNavItem[] = [
   { label: "Пошук", path: "/search" },

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { SelectLocale } from "./select-locale";
+import { SelectLocale } from "../../components/duck-nav/select-locale";
 
 const meta = {
   title: "Components/DuckNav/SelectLocale",

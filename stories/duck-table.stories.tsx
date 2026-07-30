@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { ColDef } from "ag-grid-community";
-import DuckTable from "./duck-table";
+import DuckTable from "../components/duck-table";
 
 interface DuckCase {
   code: string;

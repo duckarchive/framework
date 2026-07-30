@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import SelectProject from "./select-project";
+import SelectProject from "../../components/duck-nav/select-project";
 
 const projects = [
   {
