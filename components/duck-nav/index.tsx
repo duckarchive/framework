@@ -99,7 +99,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
   return (
     <nav className="sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg backdrop-saturate-150">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
-        <div className="flex basis-1/5 items-center gap-2">
+        <div className="flex basis-1/5 items-center gap-4">
           <div className="relative h-full grow-0 flex items-center">
             <SelectProject
               activeLocale={activeLocale}
@@ -107,7 +107,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
               currentProject={currentProject}
             />
           </div>
-          <ul className="ml-2 hidden gap-4 lg:flex">
+          <ul className="hidden gap-4 lg:flex">
             {visibleItems.map((item) => (
               <li
                 key={item.path}

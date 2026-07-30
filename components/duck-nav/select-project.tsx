@@ -2,14 +2,14 @@ import { useMemo } from "react";
 import { DuckIcon } from "./icons";
 import { Link } from "@heroui/react";
 
-const translations: Record<string, { otherProjects: string }> = {
-  uk: { otherProjects: "Інші проєкти" },
-  en: { otherProjects: "Other projects" },
-  es: { otherProjects: "Otros proyectos" },
-  it: { otherProjects: "Altri progetti" },
-  pl: { otherProjects: "Inne projekty" },
-  ro: { otherProjects: "Alte proiecte" },
-  cz: { otherProjects: "Ostatní projekty" },
+const translations: Record<string, { otherProjects: string; docs: string }> = {
+  uk: { otherProjects: "інші проєкти", docs: "Документація" },
+  en: { otherProjects: "other projects", docs: "Documentation" },
+  es: { otherProjects: "otros proyectos", docs: "Documentación" },
+  it: { otherProjects: "altri progetti", docs: "Documentazione" },
+  pl: { otherProjects: "inne projekty", docs: "Dokumentacja" },
+  ro: { otherProjects: "alte proiecte", docs: "Documentație" },
+  cz: { otherProjects: "ostatní projekty", docs: "Dokumentace" },
 };
 
 interface Project {
@@ -64,40 +64,44 @@ const SelectProject: React.FC<SelectProjectProps> = ({
           name={currentProject?.icon}
           className="duration-200 stroke-foreground"
         />
-        <p className="text-foreground text-2xl font-bold uppercase tracking-tight">{currentProject?.label}</p>
+        <p className="text-foreground text-2xl font-bold uppercase tracking-tight">
+          {currentProject?.label}
+        </p>
       </Link>
-      <ul
+      <div
         id="projects"
-        className="absolute top-14 -left-2 flex flex-col overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:opacity-100 transition-all delay-200"
+        className="dropdown__popover absolute top-11 -left-2 w-64 hover:opacity-100 transition-all delay-200"
       >
-        <li className="text-sm leading-none p-2">
-          {translations[activeLocale]?.otherProjects}:
-        </li>
-        {filteredProjects.map((project) => (
-          <li key={project.url} >
-            <Link
-              className="no-underline flex justify-start items-center p-2 gap-2 text-transparent hover:text-[#F97316] hover:bg-gray-100 dark:hover:bg-gray-800 py-2 rounded-none w-full"
-              href={project.url}
-              isDisabled={project.is_disabled}
-            >
-              {project.icon && (
-                <DuckIcon
-                  name={project.icon}
-                  className="duration-200 stroke-foreground"
-                />
-              )}
-              <div>
-                <p className="uppercase tracking-tight font-bold text-base leading-tight text-foreground">
-                  {project.label}
-                </p>
-                <p className="opacity-50 text-sm leading-none text-foreground">
-                  {project.description}
-                </p>
-              </div>
-            </Link>
+        <ul className="dropdown__menu flex flex-col overflow-hidden">
+          <li key="label" className="text-xs leading-none p-2">
+            {translations[activeLocale]?.otherProjects}
           </li>
-        ))}
-      </ul>
+          {filteredProjects.map((project) => (
+            <li key={project.url} className="menu-item menu-item--default">
+              <Link
+                className="no-underline flex justify-start items-center gap-1 text-transparent hover:text-[#F97316]"
+                href={project.url}
+                isDisabled={project.is_disabled}
+              >
+                {project.icon && (
+                  <DuckIcon
+                    name={project.icon}
+                    className="duration-200 stroke-foreground"
+                  />
+                )}
+                <div>
+                  <p className="uppercase tracking-tight font-bold text-base leading-tight text-foreground">
+                    {project.label}
+                  </p>
+                  <p className="text-sm font-thin leading-none text-foreground">
+                    {project.description}
+                  </p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
