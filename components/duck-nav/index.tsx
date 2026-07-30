@@ -1,46 +1,51 @@
 "use client";
 
-import {
-  Navbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
-  NavbarBrand,
-  NavbarItem,
-  NavbarMenuItem,
-} from "@heroui/navbar";
-import { Link, LinkProps } from "@heroui/link";
-import NextLink from "next/link";
+import { Link, Separator, Button, buttonVariants } from "@heroui/react";
 import clsx from "clsx";
-import { FaTelegram, FaWhatsapp } from "react-icons/fa";
+import {
+  FaTelegram,
+  FaWhatsapp,
+  FaBars,
+  FaTimes,
+  FaHeart,
+} from "react-icons/fa";
 
 import { ThemeSwitch } from "./theme-switch";
-import { HeartFilledIcon } from "./icons";
 import { SelectLocale } from "./select-locale";
 import { useState, useEffect, useMemo } from "react";
 import config from "./config.json";
 import { usePathname } from "next/navigation";
 import SelectProject from "./select-project";
-import { Divider } from "@heroui/divider";
 import AuthButton from "./auth-button";
 import { useSession } from "next-auth/react";
-import { Button } from "@heroui/button";
 
 const LINK_CLASS =
-  "text-base underline-offset-4 hover:underline hover:opacity-70";
+  "text-base text-foreground underline-offset-4 hover:underline hover:opacity-70";
 
-const NavLink: React.FC<LinkProps> = (props) => (
+// HeroUI v3's Link has no polymorphic `as` prop (react-aria-components' Link
+// always renders its own <a>). For Next.js client-side navigation, the
+// consuming app must wrap its root in react-aria-components'
+// `<RouterProvider navigate={router.push}>` — see README.md.
+interface NavLinkProps extends React.ComponentProps<typeof Link> {
+  href: string;
+}
+
+const NavLink: React.FC<NavLinkProps> = ({ className, href, ...props }) => (
   <Link
-    as={NextLink}
-    color="foreground"
-    target={props.href?.startsWith("https") ? "_blank" : undefined}
-    href={props.href}
-    className={clsx(LINK_CLASS, props.className)}
+    target={href.startsWith("https") ? "_blank" : undefined}
+    href={href}
+    className={clsx(LINK_CLASS, className)}
     {...props}
-  >
-    {props.children}
-  </Link>
+  />
 );
+
+// v3's Button can't render as a link (no `as`/`href`), so the icon-only
+// social links reuse Button's own class recipe on a real Link instead.
+const ICON_LINK_CLASS = buttonVariants({
+  variant: "ghost",
+  size: "sm",
+  isIconOnly: true,
+});
 
 export interface DuckNavItem {
   label: string;
@@ -66,11 +71,6 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
     setIsInIframe(window !== window.top);
   }, []);
 
-  // Return null if running inside an iframe
-  if (isInIframe) {
-    return null;
-  }
-
   // get active locale from pathname
   const activeLocale = useMemo(() => {
     const segments = pathname.split("/").filter(Boolean);
@@ -85,125 +85,164 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
     [config.projects, originSiteUrl],
   );
 
+  const visibleItems = useMemo(
+    () =>
+      items?.filter((item) => {
+        if (item.is_authorized) {
+          return status === "authenticated";
+        }
+        return true;
+      }) ?? [],
+    [items, status],
+  );
+
+  // Return null if running inside an iframe
+  if (isInIframe) {
+    return null;
+  }
+
   return (
-    <Navbar
-      maxWidth="xl"
-      position="sticky"
-      isMenuOpen={isMenuOpen}
-      onMenuOpenChange={setIsMenuOpen}
+    <nav
+      className={clsx(
+        "flex flex-col sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg backdrop-saturate-150",
+        {
+          "h-screen": isMenuOpen,
+        },
+      )}
     >
-      <NavbarContent className="basis-1/5" justify="start">
-        <NavbarBrand as="li" className="h-full relative grow-0">
-          <SelectProject
-            activeLocale={activeLocale}
-            projects={config.projects}
-            currentProject={currentProject}
-          />
-        </NavbarBrand>
-        <NavbarItem className="hidden lg:flex ml-2">
-          <ul className="flex gap-4 justify-start">
-            {items
-              ?.filter((el: DuckNavItem) => {
-                if (el.is_authorized) {
-                  return status === "authenticated";
+      <div className="mx-auto w-full flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
+        <div className="flex basis-1/5 items-center gap-4">
+          <div className="relative h-full grow-0 flex items-center">
+            <SelectProject
+              activeLocale={activeLocale}
+              projects={config.projects}
+              currentProject={currentProject}
+            />
+          </div>
+          <ul className="hidden gap-4 lg:flex">
+            {visibleItems.map((item) => (
+              <li
+                key={item.path}
+                aria-current={
+                  pathname.startsWith(item.path) ? "page" : undefined
                 }
-                return true;
-              })
-              .map((item) => (
-                <NavbarItem
-                  key={item.path}
-                  isActive={pathname.startsWith(item.path)}
-                  className="px-0"
-                >
-                  <NavLink href={item.path}>{item.label}</NavLink>
-                </NavbarItem>
-              ))}
-          </ul>
-        </NavbarItem>
-      </NavbarContent>
-
-      <NavbarContent className="basis-1 pl-4 gap-2" justify="end">
-        <Button
-          as={Link}
-          isIconOnly
-          variant="light"
-          size="sm"
-          isExternal
-          aria-label="Support Project"
-          href={config.links.sponsor}
-        >
-          <HeartFilledIcon className="text-danger w-6 h-6" />
-        </Button>
-        <Button
-          as={Link}
-          isIconOnly
-          variant="light"
-          size="sm"
-          isExternal
-          aria-label="WhatsApp Channel"
-          href={config.links.whatsapp}
-        >
-          <FaWhatsapp className="text-default-500 w-6 h-6" />
-        </Button>
-        <Button
-          as={Link}
-          isIconOnly
-          variant="light"
-          size="sm"
-          isExternal
-          aria-label="Telegram Channel"
-          href={config.links.telegram}
-        >
-          <FaTelegram className="text-default-500 w-6 h-6" />
-        </Button>
-        <ThemeSwitch />
-        {locales && locales.length > 0 && (
-          <SelectLocale locales={locales} activeLocale={activeLocale} />
-        )}
-        <NavbarItem
-          className="hidden lg:flex"
-          style={{
-            colorScheme: "normal",
-          }}
-        >
-          <AuthButton activeLocale={activeLocale} />
-        </NavbarItem>
-        <NavbarMenuToggle className="lg:hidden" />
-      </NavbarContent>
-
-      <NavbarMenu>
-        <ul className="mx-4 mt-2 flex flex-col gap-2">
-          <NavbarItem
-            style={{
-              colorScheme: "normal",
-            }}
-          >
-            <AuthButton isFull activeLocale={activeLocale} />
-          </NavbarItem>
-          <Divider className="my-4" />
-          {items
-            ?.filter((el: DuckNavItem) => {
-              if (el.is_authorized) {
-                return status === "authenticated";
-              }
-              return true;
-            })
-            .map((item) => (
-              <NavbarMenuItem
-                key={`${item.label}`}
-                isActive={pathname.startsWith(item.path)}
               >
-                <NavLink
-                  href={item.path}
-                  onPress={() => setIsMenuOpen((prev) => !prev)}
-                >
-                  {item.label}
-                </NavLink>
-              </NavbarMenuItem>
+                <NavLink href={item.path}>{item.label}</NavLink>
+              </li>
             ))}
-        </ul>
-      </NavbarMenu>
-    </Navbar>
+          </ul>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Link
+            className={ICON_LINK_CLASS}
+            aria-label="Support Project"
+            href={config.links.sponsor}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <FaHeart className="text-danger w-6 h-6" />
+          </Link>
+          {locales && locales.length > 0 && (
+            <SelectLocale locales={locales} activeLocale={activeLocale} />
+          )}
+          <div
+            className="hidden lg:flex items-center gap-2"
+            style={{ colorScheme: "normal" }}
+          >
+            <ThemeSwitch />
+            <Link
+              className={ICON_LINK_CLASS}
+              aria-label="WhatsApp Channel"
+              href={config.links.whatsapp}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <FaWhatsapp className="w-6 h-6" />
+            </Link>
+            <Link
+              className={ICON_LINK_CLASS}
+              aria-label="Telegram Channel"
+              href={config.links.telegram}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <FaTelegram className="w-6 h-6" />
+            </Link>
+            <AuthButton activeLocale={activeLocale} />
+          </div>
+          <Button
+            isIconOnly
+            variant="ghost"
+            size="sm"
+            className="lg:hidden"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            onPress={() => setIsMenuOpen((prev) => !prev)}
+          >
+            {isMenuOpen ? (
+              <FaTimes className="w-6 h-6" />
+            ) : (
+              <FaBars className="w-6 h-6" />
+            )}
+          </Button>
+        </div>
+      </div>
+
+      {isMenuOpen && (
+        <div className="grow flex flex-col justify-between lg:hidden bg-background px-4 pb-4">
+          <div>
+            <Separator className="mb-2" />
+            <ul className="flex flex-col gap-2">
+              {visibleItems.map((item) => (
+                <li
+                  key={item.label}
+                  aria-current={
+                    pathname.startsWith(item.path) ? "page" : undefined
+                  }
+                >
+                  <NavLink
+                    href={item.path}
+                    onPress={() => setIsMenuOpen((prev) => !prev)}
+                  >
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div style={{ colorScheme: "normal" }}>
+              <AuthButton activeLocale={activeLocale} />
+            </div>
+            <Separator className="my-2" />
+            <div className="flex justify-between">
+              <div className="flex gap-2">
+                <Link
+                  className={ICON_LINK_CLASS}
+                  aria-label="WhatsApp Channel"
+                  href={config.links.whatsapp}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <FaWhatsapp className="w-6 h-6" />
+                </Link>
+                <Link
+                  className={ICON_LINK_CLASS}
+                  aria-label="Telegram Channel"
+                  href={config.links.telegram}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <FaTelegram className="w-6 h-6" />
+                </Link>
+              </div>
+              <ThemeSwitch />
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 

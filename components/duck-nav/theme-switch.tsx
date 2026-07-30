@@ -1,32 +1,33 @@
 "use client";
 
-import { Button } from "@heroui/button";
+import { Button, useIsHydrated } from "@heroui/react";
 import { useTheme } from "next-themes";
-import { useIsSSR } from "@react-aria/ssr";
 import { MoonFilledIcon, SunFilledIcon } from "./icons";
 
 export const ThemeSwitch: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const isSSR = useIsSSR();
+  // HeroUI v3 replaces @react-aria/ssr's useIsSSR with useIsHydrated
+  // (inverted meaning), so the icon stays stable through hydration.
+  const isHydrated = useIsHydrated();
 
   const handleThemeChange = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  const isDark = theme === "dark" && !isSSR;
+  const isDark = theme === "dark" && isHydrated;
 
   return (
     <Button
       isIconOnly
-      variant="light"
+      variant="ghost"
       size="sm"
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
       onPress={handleThemeChange}
     >
       {isDark ? (
-        <SunFilledIcon className="text-default-500 w-6 h-6" />
+        <SunFilledIcon className="w-6 h-6" />
       ) : (
-        <MoonFilledIcon className="text-default-500 w-6 h-6" />
+        <MoonFilledIcon className="w-6 h-6" />
       )}
     </Button>
   );

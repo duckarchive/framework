@@ -1,0 +1,11 @@
+/* HeroUI v3 ships a single Tailwind entrypoint that pulls in tailwindcss
+   itself plus HeroUI's base layer, component CSS, default theme, utilities and
+   variants. There is no heroui() plugin or @config in v3, and no need to scan
+   node_modules for generated classes the way v2 required — v3 ships real CSS
+   (.button--primary etc.) in its own cascade layers. */
+@import "@heroui/styles";
+
+/* Tailwind v4 resolves sources relative to this file, so point it at the
+   component and story trees explicitly. */
+@source "../components/**/*.{ts,tsx}";
+@source "../stories/**/*.{ts,tsx}";

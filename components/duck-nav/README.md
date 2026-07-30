@@ -64,3 +64,31 @@ export const Providers: React.FC<PropsWithChildren<ProvidersProps>> = ({
   );
 };
 ```
+
+## Client-side navigation (HeroUI v3)
+
+HeroUI v3's `Link` is built on `react-aria-components` and has no polymorphic
+`as` prop, so it can no longer be rendered as `next/link`. Instead, wrap your
+app root in `react-aria-components`' `RouterProvider`, giving it your
+router's `push` function — every `Link` inside DuckNav (and everywhere else in
+your app, if you use HeroUI's `Link` directly) will then navigate through
+Next.js's router instead of doing a full page load:
+
+```tsx
+"use client";
+
+import { RouterProvider } from "react-aria-components";
+import { useRouter } from "next/navigation";
+
+export const Providers: React.FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
+
+  return (
+    <RouterProvider navigate={router.push}>{children}</RouterProvider>
+  );
+};
+```
+
+Without this, links still work — they just perform a normal `<a>` navigation
+(full page reload) rather than a client-side transition.
+

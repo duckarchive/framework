@@ -1,4 +1,4 @@
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 // "uk", "en", "pl", "cz", "ro", "es", "it"
@@ -44,11 +44,10 @@ const translations: Record<
 };
 
 interface AuthButtonProps {
-  isFull?: boolean;
   activeLocale: string;
 }
 
-const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
+const AuthButton: React.FC<AuthButtonProps> = ({ activeLocale }) => {
   const { data, status } = useSession();
 
   const handleSignInClick = () => {
@@ -72,11 +71,6 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
     return (
       <div className="flex md:flex-col items-end justify-between">
         <div className="flex flex-col">
-          {isFull && (
-            <span className="text-sm text-gray-500 border-none cursor-pointer">
-              {translations[activeLocale]?.signedInAs}
-            </span>
-          )}
           <span className="md:text-sm">{data.user?.email}</span>
         </div>
         <span
@@ -92,6 +86,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
   if (status === "unauthenticated") {
     return (
       <Button
+        variant="ghost"
         onPress={handleSignInClick}
         className="rounded-md border border-gray-300 bg-background hover:bg-foreground text-foreground hover:text-background font-sans text-sm h-10 px-3 flex items-center justify-between relative w-auto transition-colors duration-200"
       >

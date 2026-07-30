@@ -12,7 +12,7 @@ import {
 import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
 import { useEffect, useRef } from "react";
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 
 interface DuckTableProps<T> extends GridOptions<T> {
   appTheme?: string;
@@ -129,10 +129,11 @@ const DuckTable = <T,>({
             {filters.map((filter) => (
               <Button
                 key={filter.id}
-                radius="full"
-                color="primary"
+                // v3 Button has no `color`/`radius`: the accent fill comes from
+                // variant="primary", the pill shape from a utility class.
+                className="rounded-full"
                 size="sm"
-                variant={activeFilterId === filter.id ? "solid" : "bordered"}
+                variant={activeFilterId === filter.id ? "primary" : "outline"}
                 onPress={handleFilterClick(filter.id)}
               >
                 {filter.title}

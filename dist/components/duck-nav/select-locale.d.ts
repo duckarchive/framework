@@ -1,5 +1,6 @@
-import { DropdownProps } from "@heroui/dropdown";
-interface SelectLocaleProps extends Partial<DropdownProps> {
+import { Dropdown } from "@heroui/react";
+import type { ComponentProps } from "react";
+interface SelectLocaleProps extends Partial<ComponentProps<typeof Dropdown>> {
     locales: string[];
     activeLocale: string;
 }

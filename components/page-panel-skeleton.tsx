@@ -1,5 +1,5 @@
 "use client";
-import { Skeleton } from "@heroui/skeleton";
+import { Skeleton } from "@heroui/react";
 
 const PagePanelSkeleton: React.FC = () => (
   <div className="flex-col md:flex-row flex justify-between gap-4">

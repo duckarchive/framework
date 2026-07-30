@@ -1,15 +1,16 @@
 "use client";
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Button } from "@heroui/button";
+import { Button, useIsHydrated } from "@heroui/react";
 import { useTheme } from "next-themes";
-import { useIsSSR } from "@react-aria/ssr";
 import { MoonFilledIcon, SunFilledIcon } from "./icons";
 export const ThemeSwitch = () => {
     const { theme, setTheme } = useTheme();
-    const isSSR = useIsSSR();
+    // HeroUI v3 replaces @react-aria/ssr's useIsSSR with useIsHydrated
+    // (inverted meaning), so the icon stays stable through hydration.
+    const isHydrated = useIsHydrated();
     const handleThemeChange = () => {
         setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
     };
-    const isDark = theme === "dark" && !isSSR;
-    return (_jsx(Button, { isIconOnly: true, variant: "light", size: "sm", "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`, onPress: handleThemeChange, children: isDark ? (_jsx(SunFilledIcon, { className: "text-default-500 w-6 h-6" })) : (_jsx(MoonFilledIcon, { className: "text-default-500 w-6 h-6" })) }));
+    const isDark = theme === "dark" && isHydrated;
+    return (_jsx(Button, { isIconOnly: true, variant: "ghost", size: "sm", "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`, onPress: handleThemeChange, children: isDark ? (_jsx(SunFilledIcon, { className: "text-muted w-6 h-6" })) : (_jsx(MoonFilledIcon, { className: "text-muted w-6 h-6" })) }));
 };

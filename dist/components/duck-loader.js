@@ -1,7 +1,6 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-import { Link } from "@heroui/link";
-import { Spinner } from "@heroui/spinner";
+import { Link, Spinner } from "@heroui/react";
 const funnyMessages = [
     "Качка може ходити, плавати і літати!",
     "Качку породи 'українська сіра' створювали на базі Українського НДІ птахівництва.",
