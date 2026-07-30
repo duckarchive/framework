@@ -66,11 +66,6 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
     setIsInIframe(window !== window.top);
   }, []);
 
-  // Return null if running inside an iframe
-  if (isInIframe) {
-    return null;
-  }
-
   // get active locale from pathname
   const activeLocale = useMemo(() => {
     const segments = pathname.split("/").filter(Boolean);
@@ -84,6 +79,11 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
     () => config.projects.find((p) => p.url === originSiteUrl),
     [config.projects, originSiteUrl],
   );
+
+  // Return null if running inside an iframe
+  if (isInIframe) {
+    return null;
+  }
 
   return (
     <Navbar

@@ -28,10 +28,6 @@ const DuckNav = ({ siteUrl, locales, items }) => {
         // Check if running inside an iframe
         setIsInIframe(window !== window.top);
     }, []);
-    // Return null if running inside an iframe
-    if (isInIframe) {
-        return null;
-    }
     // get active locale from pathname
     const activeLocale = useMemo(() => {
         const segments = pathname.split("/").filter(Boolean);
@@ -41,6 +37,10 @@ const DuckNav = ({ siteUrl, locales, items }) => {
         return "uk"; // default locale
     }, [pathname, locales]);
     const currentProject = useMemo(() => config.projects.find((p) => p.url === originSiteUrl), [config.projects, originSiteUrl]);
+    // Return null if running inside an iframe
+    if (isInIframe) {
+        return null;
+    }
     return (_jsxs(Navbar, { maxWidth: "xl", position: "sticky", isMenuOpen: isMenuOpen, onMenuOpenChange: setIsMenuOpen, children: [_jsxs(NavbarContent, { className: "basis-1/5", justify: "start", children: [_jsx(NavbarBrand, { as: "li", className: "h-full relative grow-0", children: _jsx(SelectProject, { activeLocale: activeLocale, projects: config.projects, currentProject: currentProject }) }), _jsx(NavbarItem, { className: "hidden lg:flex ml-2", children: _jsx("ul", { className: "flex gap-4 justify-start", children: items
                                 ?.filter((el) => {
                                 if (el.is_authorized) {

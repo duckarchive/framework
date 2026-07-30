@@ -6,7 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "keywords": [
     "nextjs",
@@ -55,8 +57,13 @@
     "@heroui/skeleton": "^2.2.18",
     "@heroui/spinner": "^2.2.25",
     "@heroui/switch": "^2.2.25",
+    "@heroui/system": "^2.4.28",
+    "@heroui/theme": "^2.4.26",
     "@react-aria/ssr": "^3.9.10",
     "@react-aria/visually-hidden": "^3.8.28",
+    "@storybook/addon-docs": "^10.5.5",
+    "@storybook/nextjs-vite": "^10.5.5",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/lodash": "^4.17.21",
     "@types/react": "^19.2.7",
     "ag-grid-community": "^33.3.2",
@@ -67,9 +74,19 @@
     "next-auth": "^4.24.13",
     "next-themes": "^0.4.6",
     "react-icons": "^5.5.0",
-    "typescript": "^5.9.3"
+    "storybook": "^10.5.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.6"
   },
   "dependencies": {
     "lodash": "^4.17.21"
+  },
+  "pnpm": {
+    "overrides": {
+      "@react-aria/interactions": "^3.28.1",
+      "@react-aria/focus": "^3.22.1",
+      "@react-aria/utils": "^3.33.1"
+    }
   }
 }
