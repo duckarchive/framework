@@ -2,10 +2,15 @@
 
 import { Link, Separator, Button, buttonVariants } from "@heroui/react";
 import clsx from "clsx";
-import { FaTelegram, FaWhatsapp, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaTelegram,
+  FaWhatsapp,
+  FaBars,
+  FaTimes,
+  FaHeart,
+} from "react-icons/fa";
 
 import { ThemeSwitch } from "./theme-switch";
-import { HeartFilledIcon } from "./icons";
 import { SelectLocale } from "./select-locale";
 import { useState, useEffect, useMemo } from "react";
 import config from "./config.json";
@@ -97,8 +102,15 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
   }
 
   return (
-    <nav className="sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg backdrop-saturate-150">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
+    <nav
+      className={clsx(
+        "flex flex-col sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg backdrop-saturate-150",
+        {
+          "h-screen": isMenuOpen,
+        },
+      )}
+    >
+      <div className="mx-auto w-full flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
         <div className="flex basis-1/5 items-center gap-4">
           <div className="relative h-full grow-0 flex items-center">
             <SelectProject
@@ -111,7 +123,9 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
             {visibleItems.map((item) => (
               <li
                 key={item.path}
-                aria-current={pathname.startsWith(item.path) ? "page" : undefined}
+                aria-current={
+                  pathname.startsWith(item.path) ? "page" : undefined
+                }
               >
                 <NavLink href={item.path}>{item.label}</NavLink>
               </li>
@@ -119,7 +133,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
           </ul>
         </div>
 
-        <div className="flex items-center gap-2 pl-4">
+        <div className="flex items-center gap-2">
           <Link
             className={ICON_LINK_CLASS}
             aria-label="Support Project"
@@ -127,31 +141,34 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            <HeartFilledIcon className="text-danger w-6 h-6" />
+            <FaHeart className="text-danger w-6 h-6" />
           </Link>
-          <Link
-            className={ICON_LINK_CLASS}
-            aria-label="WhatsApp Channel"
-            href={config.links.whatsapp}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <FaWhatsapp className="w-6 h-6" />
-          </Link>
-          <Link
-            className={ICON_LINK_CLASS}
-            aria-label="Telegram Channel"
-            href={config.links.telegram}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <FaTelegram className="w-6 h-6" />
-          </Link>
-          <ThemeSwitch />
           {locales && locales.length > 0 && (
             <SelectLocale locales={locales} activeLocale={activeLocale} />
           )}
-          <div className="hidden lg:flex" style={{ colorScheme: "normal" }}>
+          <div
+            className="hidden lg:flex items-center gap-2"
+            style={{ colorScheme: "normal" }}
+          >
+            <ThemeSwitch />
+            <Link
+              className={ICON_LINK_CLASS}
+              aria-label="WhatsApp Channel"
+              href={config.links.whatsapp}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <FaWhatsapp className="w-6 h-6" />
+            </Link>
+            <Link
+              className={ICON_LINK_CLASS}
+              aria-label="Telegram Channel"
+              href={config.links.telegram}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <FaTelegram className="w-6 h-6" />
+            </Link>
             <AuthButton activeLocale={activeLocale} />
           </div>
           <Button
@@ -173,26 +190,56 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
       </div>
 
       {isMenuOpen && (
-        <div className="lg:hidden border-t border-border bg-background px-4 py-2">
-          <ul className="flex flex-col gap-2">
-            <li style={{ colorScheme: "normal" }}>
-              <AuthButton isFull activeLocale={activeLocale} />
-            </li>
-            <Separator className="my-4" />
-            {visibleItems.map((item) => (
-              <li
-                key={item.label}
-                aria-current={pathname.startsWith(item.path) ? "page" : undefined}
-              >
-                <NavLink
-                  href={item.path}
-                  onPress={() => setIsMenuOpen((prev) => !prev)}
+        <div className="grow flex flex-col justify-between lg:hidden bg-background px-4 pb-4">
+          <div>
+            <Separator className="mb-2" />
+            <ul className="flex flex-col gap-2">
+              {visibleItems.map((item) => (
+                <li
+                  key={item.label}
+                  aria-current={
+                    pathname.startsWith(item.path) ? "page" : undefined
+                  }
                 >
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+                  <NavLink
+                    href={item.path}
+                    onPress={() => setIsMenuOpen((prev) => !prev)}
+                  >
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div style={{ colorScheme: "normal" }}>
+              <AuthButton activeLocale={activeLocale} />
+            </div>
+            <Separator className="my-2" />
+            <div className="flex justify-between">
+              <div className="flex gap-2">
+                <Link
+                  className={ICON_LINK_CLASS}
+                  aria-label="WhatsApp Channel"
+                  href={config.links.whatsapp}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <FaWhatsapp className="w-6 h-6" />
+                </Link>
+                <Link
+                  className={ICON_LINK_CLASS}
+                  aria-label="Telegram Channel"
+                  href={config.links.telegram}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <FaTelegram className="w-6 h-6" />
+                </Link>
+              </div>
+              <ThemeSwitch />
+            </div>
+          </div>
         </div>
       )}
     </nav>

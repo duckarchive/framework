@@ -44,11 +44,10 @@ const translations: Record<
 };
 
 interface AuthButtonProps {
-  isFull?: boolean;
   activeLocale: string;
 }
 
-const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
+const AuthButton: React.FC<AuthButtonProps> = ({ activeLocale }) => {
   const { data, status } = useSession();
 
   const handleSignInClick = () => {
@@ -72,11 +71,6 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
     return (
       <div className="flex md:flex-col items-end justify-between">
         <div className="flex flex-col">
-          {isFull && (
-            <span className="text-sm text-gray-500 border-none cursor-pointer">
-              {translations[activeLocale]?.signedInAs}
-            </span>
-          )}
           <span className="md:text-sm">{data.user?.email}</span>
         </div>
         <span

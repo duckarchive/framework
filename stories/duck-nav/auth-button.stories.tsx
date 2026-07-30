@@ -14,9 +14,3 @@ type Story = StoryObj<typeof meta>;
 
 // Use the "Auth" toolbar control to switch between signed-in/out.
 export const Default: Story = {};
-
-export const Full: Story = {
-  args: {
-    isFull: true,
-  },
-};
