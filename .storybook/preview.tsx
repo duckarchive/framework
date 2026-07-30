@@ -87,7 +87,7 @@ const preview: Preview = {
           <SessionProvider
             session={authStatus === "authenticated" ? mockSession : null}
           >
-            <div className="p-4 bg-background text-foreground min-h-24">
+            <div className="bg-background text-foreground">
               <Story />
             </div>
           </SessionProvider>

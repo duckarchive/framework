@@ -57,7 +57,7 @@ const SelectProject: React.FC<SelectProjectProps> = ({
       </style>
       <Link
         id="logo"
-        className="flex justify-start items-center gap-2 hover:text-transparent text-[#F97316]"
+        className="no-underline flex justify-start items-center gap-2 hover:text-transparent text-[#F97316]"
         href="/"
       >
         <DuckIcon
@@ -74,9 +74,9 @@ const SelectProject: React.FC<SelectProjectProps> = ({
           {translations[activeLocale]?.otherProjects}:
         </li>
         {filteredProjects.map((project) => (
-          <li key={project.url}>
+          <li key={project.url} >
             <Link
-              className="flex justify-start items-center p-2 gap-2 text-transparent hover:text-[#F97316] hover:bg-gray-100 dark:hover:bg-gray-800 py-2 rounded-lg"
+              className="no-underline flex justify-start items-center p-2 gap-2 text-transparent hover:text-[#F97316] hover:bg-gray-100 dark:hover:bg-gray-800 py-2 rounded-none w-full"
               href={project.url}
               isDisabled={project.is_disabled}
             >
@@ -87,7 +87,7 @@ const SelectProject: React.FC<SelectProjectProps> = ({
                 />
               )}
               <div>
-                <p className="font-light uppercase tracking-tight text-base leading-tight text-foreground">
+                <p className="uppercase tracking-tight font-bold text-base leading-tight text-foreground">
                   {project.label}
                 </p>
                 <p className="opacity-50 text-sm leading-none text-foreground">

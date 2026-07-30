@@ -97,9 +97,9 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
   }
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-border bg-background/70 backdrop-blur-lg backdrop-saturate-150">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
-        <div className="flex basis-1/5 items-center">
+    <nav className="sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg backdrop-saturate-150">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
+        <div className="flex basis-1/5 items-center gap-2">
           <div className="relative h-full grow-0 flex items-center">
             <SelectProject
               activeLocale={activeLocale}
@@ -136,7 +136,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            <FaWhatsapp className="text-muted w-6 h-6" />
+            <FaWhatsapp className="w-6 h-6" />
           </Link>
           <Link
             className={ICON_LINK_CLASS}
@@ -145,7 +145,7 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
             target="_blank"
             rel="noreferrer noopener"
           >
-            <FaTelegram className="text-muted w-6 h-6" />
+            <FaTelegram className="w-6 h-6" />
           </Link>
           <ThemeSwitch />
           {locales && locales.length > 0 && (
@@ -164,9 +164,9 @@ const DuckNav: React.FC<DuckNavProps> = ({ siteUrl, locales, items }) => {
             onPress={() => setIsMenuOpen((prev) => !prev)}
           >
             {isMenuOpen ? (
-              <FaTimes className="w-5 h-5" />
+              <FaTimes className="w-6 h-6" />
             ) : (
-              <FaBars className="w-5 h-5" />
+              <FaBars className="w-6 h-6" />
             )}
           </Button>
         </div>

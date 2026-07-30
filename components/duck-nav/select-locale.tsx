@@ -1,8 +1,9 @@
 "use client";
 
-import { Dropdown, Avatar, buttonVariants } from "@heroui/react";
+import { Dropdown, buttonVariants } from "@heroui/react";
 import type { ComponentProps } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import NextImage from "next/image";
 
 interface SelectLocaleProps extends Partial<ComponentProps<typeof Dropdown>> {
   locales: string[];
@@ -37,18 +38,17 @@ const TRIGGER_CLASS = buttonVariants({
   variant: "ghost",
   size: "sm",
   isIconOnly: true,
+  className: "flex items-center justify-center",
 });
 
-const LocaleAvatar: React.FC<{ locale: string }> = ({ locale }) => (
-  <Avatar className="w-6 h-6">
-    <Avatar.Image
-      alt={locale}
-      src={`https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg`}
-    />
-    <Avatar.Fallback className="text-[10px] uppercase">
-      {locale}
-    </Avatar.Fallback>
-  </Avatar>
+const LocaleFlag: React.FC<{ locale: string }> = ({ locale }) => (
+  <NextImage
+    alt={locale}
+    width={24}
+    height={24}
+    className="w-6 h-6 rounded-full object-cover"
+    src={`https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg`}
+  />
 );
 
 export const SelectLocale: React.FC<SelectLocaleProps> = ({
@@ -81,7 +81,7 @@ export const SelectLocale: React.FC<SelectLocaleProps> = ({
         className={TRIGGER_CLASS}
         aria-label="DuckNav select locale"
       >
-        <LocaleAvatar locale={activeLocale} />
+        <LocaleFlag locale={activeLocale} />
       </Dropdown.Trigger>
       <Dropdown.Popover>
         <Dropdown.Menu
@@ -95,7 +95,7 @@ export const SelectLocale: React.FC<SelectLocaleProps> = ({
               textValue={LOCALE_TO_NAME[locale]}
               className="flex items-center gap-2"
             >
-              <LocaleAvatar locale={locale} />
+              <LocaleFlag locale={locale} />
               {LOCALE_TO_NAME[locale]}
             </Dropdown.Item>
           ))}

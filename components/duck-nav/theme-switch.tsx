@@ -25,9 +25,9 @@ export const ThemeSwitch: React.FC = () => {
       onPress={handleThemeChange}
     >
       {isDark ? (
-        <SunFilledIcon className="text-muted w-6 h-6" />
+        <SunFilledIcon className="w-6 h-6" />
       ) : (
-        <MoonFilledIcon className="text-muted w-6 h-6" />
+        <MoonFilledIcon className="w-6 h-6" />
       )}
     </Button>
   );
