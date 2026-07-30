@@ -5,7 +5,7 @@ import { themeQuartz, colorSchemeDark, } from "ag-grid-community";
 import { AG_GRID_LOCALE_UK } from "../lib/ag-grid-locale-uk";
 import Loader from "./duck-loader";
 import { useEffect, useRef } from "react";
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, filters, activeFilterId, setActiveFilterId, id, persistColWidth = true, ...agGridProps }) => {
     const agGridRef = useRef(null);
     const getStorageKey = () => `duck-table-col-widths-${id}`;
@@ -70,7 +70,10 @@ const DuckTable = ({ appTheme = "light", columns, rows, isLoading, loadingPage, 
         console.log("click filter", filterId);
         setActiveFilterId(activeFilterId === filterId ? undefined : filterId);
     };
-    return (_jsxs(_Fragment, { children: [filters && filters.length > 0 && (_jsx("div", { className: "flex justify-between items-center h-10", children: _jsx("div", { className: "flex gap-1", children: filters.map((filter) => (_jsx(Button, { radius: "full", color: "primary", size: "sm", variant: activeFilterId === filter.id ? "solid" : "bordered", onPress: handleFilterClick(filter.id), children: filter.title }, filter.id))) }) })), _jsx("div", { className: "h-96 flex-grow", children: _jsx(AgGridReact, { ref: agGridRef, theme: agGridTheme, rowData: rows, suppressMovableColumns: true, loading: isLoading, loadingOverlayComponent: () => _jsx(Loader, { progress: loadingPage }), columnDefs: columns, suppressHorizontalScroll: true, colResizeDefault: "shift", localeText: AG_GRID_LOCALE_UK, pagination: true, enableCellTextSelection: true, paginationPageSize: 50, alwaysShowVerticalScroll: true, onColumnResized: saveColumnWidths, defaultColDef: {
+    return (_jsxs(_Fragment, { children: [filters && filters.length > 0 && (_jsx("div", { className: "flex justify-between items-center h-10", children: _jsx("div", { className: "flex gap-1", children: filters.map((filter) => (_jsx(Button, { 
+                        // v3 Button has no `color`/`radius`: the accent fill comes from
+                        // variant="primary", the pill shape from a utility class.
+                        className: "rounded-full", size: "sm", variant: activeFilterId === filter.id ? "primary" : "outline", onPress: handleFilterClick(filter.id), children: filter.title }, filter.id))) }) })), _jsx("div", { className: "h-96 flex-grow", children: _jsx(AgGridReact, { ref: agGridRef, theme: agGridTheme, rowData: rows, suppressMovableColumns: true, loading: isLoading, loadingOverlayComponent: () => _jsx(Loader, { progress: loadingPage }), columnDefs: columns, suppressHorizontalScroll: true, colResizeDefault: "shift", localeText: AG_GRID_LOCALE_UK, pagination: true, enableCellTextSelection: true, paginationPageSize: 50, alwaysShowVerticalScroll: true, onColumnResized: saveColumnWidths, defaultColDef: {
                         resizable: true,
                         minWidth: 100,
                         filterParams: {

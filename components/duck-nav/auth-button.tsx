@@ -1,4 +1,4 @@
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 // "uk", "en", "pl", "cz", "ro", "es", "it"
@@ -92,6 +92,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ isFull, activeLocale }) => {
   if (status === "unauthenticated") {
     return (
       <Button
+        variant="ghost"
         onPress={handleSignInClick}
         className="rounded-md border border-gray-300 bg-background hover:bg-foreground text-foreground hover:text-background font-sans text-sm h-10 px-3 flex items-center justify-between relative w-auto transition-colors duration-200"
       >

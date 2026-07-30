@@ -1,17 +1,10 @@
 "use client";
 
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  DropdownProps,
-} from "@heroui/dropdown";
-import { Button } from "@heroui/button";
-import { Avatar } from "@heroui/avatar";
+import { Dropdown, Avatar, buttonVariants } from "@heroui/react";
+import type { ComponentProps } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
-interface SelectLocaleProps extends Partial<DropdownProps> {
+interface SelectLocaleProps extends Partial<ComponentProps<typeof Dropdown>> {
   locales: string[];
   activeLocale: string;
 }
@@ -37,6 +30,26 @@ const LOCALE_TO_NAME: Record<string, string> = {
   ro: "Română",
   cz: "Čeština",
 };
+
+// v3's Dropdown.Trigger renders the actual trigger button itself (no wrapping
+// <Button>), so it needs Button's own class recipe applied directly.
+const TRIGGER_CLASS = buttonVariants({
+  variant: "ghost",
+  size: "sm",
+  isIconOnly: true,
+});
+
+const LocaleAvatar: React.FC<{ locale: string }> = ({ locale }) => (
+  <Avatar className="w-6 h-6">
+    <Avatar.Image
+      alt={locale}
+      src={`https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg`}
+    />
+    <Avatar.Fallback className="text-[10px] uppercase">
+      {locale}
+    </Avatar.Fallback>
+  </Avatar>
+);
 
 export const SelectLocale: React.FC<SelectLocaleProps> = ({
   locales,
@@ -64,39 +77,30 @@ export const SelectLocale: React.FC<SelectLocaleProps> = ({
 
   return (
     <Dropdown {...dropdownProps}>
-      <DropdownTrigger>
-        <Button
-          isIconOnly
-          variant="light"
-          size="sm"
-          aria-label="DuckNav select locale"
-        >
-          <Avatar
-            alt={activeLocale}
-            className="w-6 h-6"
-            src={`https://flagcdn.com/${LOCALE_TO_COUNTRY[activeLocale]}.svg`}
-          />
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu
-        aria-label="Locale selection"
-        onAction={(key) => handleLocaleChange(key as string)}
+      <Dropdown.Trigger
+        className={TRIGGER_CLASS}
+        aria-label="DuckNav select locale"
       >
-        {locales.map((locale) => (
-          <DropdownItem
-            key={locale}
-            startContent={
-              <Avatar
-                alt={locale}
-                className="w-6 h-6"
-                src={`https://flagcdn.com/${LOCALE_TO_COUNTRY[locale]}.svg`}
-              />
-            }
-          >
-            {LOCALE_TO_NAME[locale]}
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
+        <LocaleAvatar locale={activeLocale} />
+      </Dropdown.Trigger>
+      <Dropdown.Popover>
+        <Dropdown.Menu
+          aria-label="Locale selection"
+          onAction={(key) => handleLocaleChange(key as string)}
+        >
+          {locales.map((locale) => (
+            <Dropdown.Item
+              key={locale}
+              id={locale}
+              textValue={LOCALE_TO_NAME[locale]}
+              className="flex items-center gap-2"
+            >
+              <LocaleAvatar locale={locale} />
+              {LOCALE_TO_NAME[locale]}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown.Popover>
     </Dropdown>
   );
 };

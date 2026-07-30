@@ -24,12 +24,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-// `text-primary` colors the `currentColor` fills separately from the
+// `text-accent` colors the `currentColor` fills separately from the
 // `stroke-foreground` outlines, so overlapping fill and stroke details (e.g.
 // map's meridians over its filled circle) stay distinguishable for review.
 export const AllIcons: Story = {
   render: () => (
-    <div className="flex flex-wrap gap-6 text-primary">
+    <div className="flex flex-wrap gap-6 text-accent">
       {ICON_NAMES.map((name) => (
         <div key={name} className="flex flex-col items-center gap-1">
           <DuckIcon name={name} className={ICON_CLASS} />

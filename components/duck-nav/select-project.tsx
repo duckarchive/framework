@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { DuckIcon } from "./icons";
-import NextLink from "next/link";
-import { Link } from "@heroui/link";
+import { Link } from "@heroui/react";
 
 const translations: Record<string, { otherProjects: string }> = {
   uk: { otherProjects: "Інші проєкти" },
@@ -57,7 +56,6 @@ const SelectProject: React.FC<SelectProjectProps> = ({
       `}
       </style>
       <Link
-        as={NextLink}
         id="logo"
         className="flex justify-start items-center gap-2 hover:text-transparent text-[#F97316]"
         href="/"
@@ -78,7 +76,6 @@ const SelectProject: React.FC<SelectProjectProps> = ({
         {filteredProjects.map((project) => (
           <li key={project.url}>
             <Link
-              as={NextLink}
               className="flex justify-start items-center p-2 gap-2 text-transparent hover:text-[#F97316] hover:bg-gray-100 dark:hover:bg-gray-800 py-2 rounded-lg"
               href={project.url}
               isDisabled={project.is_disabled}

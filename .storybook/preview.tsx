@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import type { Preview } from "@storybook/nextjs-vite";
-import { HeroUIProvider } from "@heroui/system";
 import { ThemeProvider } from "next-themes";
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 import { SessionProvider, mockSession } from "./mocks/next-auth-react";
@@ -81,16 +80,17 @@ const preview: Preview = {
     (Story, context) => {
       const { theme, authStatus } = context.globals;
       return (
+        // HeroUI v3 has no provider component (styling comes from CSS, theme
+        // switching from next-themes' own `useTheme`), so there is nothing to
+        // wrap with beyond ThemeSync + the mock SessionProvider.
         <ThemeSync theme={theme}>
-          <HeroUIProvider>
-            <SessionProvider
-              session={authStatus === "authenticated" ? mockSession : null}
-            >
-              <div className="p-4 bg-background text-foreground min-h-24">
-                <Story />
-              </div>
-            </SessionProvider>
-          </HeroUIProvider>
+          <SessionProvider
+            session={authStatus === "authenticated" ? mockSession : null}
+          >
+            <div className="p-4 bg-background text-foreground min-h-24">
+              <Story />
+            </div>
+          </SessionProvider>
         </ThemeSync>
       );
     },
