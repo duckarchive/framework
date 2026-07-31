@@ -60,19 +60,30 @@ export const SelectLocale: React.FC<SelectLocaleProps> = ({
   const pathname = usePathname();
 
   const handleLocaleChange = (newLocale: string) => {
+    // Persist the choice in the cookie next-intl's middleware resolves the
+    // locale from (URL prefix → NEXT_LOCALE cookie → Accept-Language). This
+    // must happen client-side: a locale switch is a soft navigation, and the
+    // middleware deliberately skips cookie syncing for those (it only trusts
+    // sec-fetch-dest: document requests). Lifetime matches the app's
+    // `localeCookie.maxAge` (1 year).
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; samesite=lax`;
+
     // Extract locale from pathname (assuming format: /[locale]/...)
     const segments = pathname.split("/").filter(Boolean);
 
     if (segments.length > 0 && locales.includes(segments[0])) {
       // Replace first segment (current locale) with new locale
       segments[0] = newLocale;
-      const newPathname = "/" + segments.join("/");
-      router.push(newPathname);
     } else {
-      // If no locale in path, prepend the new locale
-      const newPathname = `/${newLocale}${pathname}`;
-      router.push(newPathname);
+      // If no locale in path, prepend the new locale. For the app's default
+      // locale the middleware redirects back to the unprefixed path.
+      segments.unshift(newLocale);
     }
+
+    // usePathname drops the query string — carry it (and any hash) over so
+    // switching locale doesn't wipe an in-progress search.
+    const suffix = window.location.search + window.location.hash;
+    router.push("/" + segments.join("/") + suffix);
   };
 
   return (
