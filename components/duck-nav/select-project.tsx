@@ -64,7 +64,7 @@ const SelectProject: React.FC<SelectProjectProps> = ({
           name={currentProject?.icon}
           className="duration-200 stroke-foreground"
         />
-        <p className="text-foreground text-2xl font-bold uppercase tracking-tight">
+        <p className="text-foreground text-2xl font-bold uppercase tracking-tighter">
           {currentProject?.label}
         </p>
       </Link>
@@ -90,7 +90,7 @@ const SelectProject: React.FC<SelectProjectProps> = ({
                   />
                 )}
                 <div>
-                  <p className="uppercase tracking-tight font-bold text-base leading-tight text-foreground">
+                  <p className="uppercase tracking-tighter font-bold text-base leading-tighter text-foreground">
                     {project.label}
                   </p>
                   <p className="text-sm font-thin leading-none text-foreground">
