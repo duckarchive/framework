@@ -12,6 +12,16 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": ["components/**/*", "index.ts", "lib/**/*"],
-  "exclude": ["stories", ".storybook", "**/*.stories.tsx", "**/*.stories.ts"]
+  "include": [
+    "components/**/*",
+    "index.ts",
+    "lib/**/*",
+    "fonts.ts"
+  ],
+  "exclude": [
+    "stories",
+    ".storybook",
+    "**/*.stories.tsx",
+    "**/*.stories.ts"
+  ]
 }
