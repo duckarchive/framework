@@ -15,8 +15,6 @@
  * the package (`assets/fonts`, mirrored into `dist/` by the build).
  */
 export declare const fontSans: import("next/dist/compiled/@next/font").NextFontWithVariable;
-export declare const fontLabel: import("next/dist/compiled/@next/font").NextFontWithVariable;
 export declare const fontMono: import("next/dist/compiled/@next/font").NextFontWithVariable;
-export declare const fontComic: import("next/dist/compiled/@next/font").NextFontWithVariable;
 /** All four CSS variable classes, ready to drop on <body>. */
 export declare const fontVariables: string;
