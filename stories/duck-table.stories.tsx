@@ -11,15 +11,45 @@ interface DuckCase {
 }
 
 const rows: DuckCase[] = [
-  { code: "Р-1234", title: "Справа про реєстрацію товариства", year: 1923, archive: "ЦДІАК" },
-  { code: "Ф-5821", title: "Метричні книги парафії", year: 1901, archive: "ДАКО" },
-  { code: "Н-0098", title: "Наказ про призначення", year: 1937, archive: "ЦДАВО" },
-  { code: "П-4471", title: "Протокол засідання ради", year: 1919, archive: "ДАЛО" },
-  { code: "К-3302", title: "Клопотання про поновлення", year: 1945, archive: "ЦДІАК" },
+  {
+    code: "Р-1234",
+    title: "Справа про реєстрацію товариства",
+    year: 1923,
+    archive: "ЦДІАК",
+  },
+  {
+    code: "Ф-5821",
+    title: "Метричні книги парафії",
+    year: 1901,
+    archive: "ДАКО",
+  },
+  {
+    code: "Н-0098",
+    title: "Наказ про призначення",
+    year: 1937,
+    archive: "ЦДАВО",
+  },
+  {
+    code: "П-4471",
+    title: "Протокол засідання ради",
+    year: 1919,
+    archive: "ДАЛО",
+  },
+  {
+    code: "К-3302",
+    title: "Клопотання про поновлення",
+    year: 1945,
+    archive: "ЦДІАК",
+  },
 ];
 
 const columns: ColDef<DuckCase>[] = [
-  { field: "code", headerName: "Код", width: 130, filter: "agTextColumnFilter" },
+  {
+    field: "code",
+    headerName: "Код",
+    width: 130,
+    filter: "agTextColumnFilter",
+  },
   { field: "title", headerName: "Назва справи", flex: 1 },
   { field: "year", headerName: "Рік", width: 100 },
   { field: "archive", headerName: "Архів", width: 130 },
@@ -29,8 +59,16 @@ const columns: ColDef<DuckCase>[] = [
 // column (see components/duck-table.tsx), so these must be ag-grid text filter
 // models, not filters on an arbitrary field.
 const filters = [
-  { id: "r-codes", title: "Р-справи", value: { filterType: "text", type: "startsWith", filter: "Р" } },
-  { id: "k-codes", title: "К-справи", value: { filterType: "text", type: "startsWith", filter: "К" } },
+  {
+    id: "r-codes",
+    title: "Р-справи",
+    value: { filterType: "text", type: "startsWith", filter: "Р" },
+  },
+  {
+    id: "k-codes",
+    title: "К-справи",
+    value: { filterType: "text", type: "startsWith", filter: "К" },
+  },
 ];
 
 const meta = {
@@ -47,10 +85,21 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const DuckTableDemo = (args: Partial<React.ComponentProps<typeof DuckTable<DuckCase>>>) => {
-  const [activeFilterId, setActiveFilterId] = useState<string | undefined>(args.activeFilterId);
+const DuckTableDemo = (
+  args: Partial<React.ComponentProps<typeof DuckTable<DuckCase>>>,
+) => {
+  const [activeFilterId, setActiveFilterId] = useState<string | undefined>(
+    args.activeFilterId,
+  );
   return (
-    <div className="flex flex-col p-6 h-full bg-blue-100 dark:bg-blue-900">
+    <div
+      className="flex flex-col p-6 h-screen"
+      style={{
+        backgroundImage:
+          "radial-gradient(color-mix(in srgb, var(--foreground) 10%, transparent) 1px, transparent 1px)",
+        backgroundSize: "calc(var(--spacing) * 6) calc(var(--spacing) * 6)",
+      }}
+    >
       <DuckTable<DuckCase>
         id="storybook-duck-table"
         columns={columns}
@@ -68,7 +117,9 @@ const DuckTableDemo = (args: Partial<React.ComponentProps<typeof DuckTable<DuckC
 // hardcoded arg, so the ag-grid theme follows the same light/dark switch as
 // the rest of the page.
 export const Default: Story = {
-  render: (args, { globals }) => <DuckTableDemo {...args} appTheme={globals.theme} />,
+  render: (args, { globals }) => (
+    <DuckTableDemo {...args} appTheme={globals.theme} />
+  ),
   args: {
     columns,
     rows,
@@ -77,7 +128,9 @@ export const Default: Story = {
 };
 
 export const WithFilters: Story = {
-  render: (args, { globals }) => <DuckTableDemo {...args} appTheme={globals.theme} />,
+  render: (args, { globals }) => (
+    <DuckTableDemo {...args} appTheme={globals.theme} />
+  ),
   args: {
     columns,
     rows,
@@ -87,7 +140,9 @@ export const WithFilters: Story = {
 };
 
 export const Loading: Story = {
-  render: (args, { globals }) => <DuckTableDemo {...args} appTheme={globals.theme} />,
+  render: (args, { globals }) => (
+    <DuckTableDemo {...args} appTheme={globals.theme} />
+  ),
   args: {
     columns,
     rows: [],

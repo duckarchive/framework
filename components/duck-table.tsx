@@ -117,15 +117,18 @@ const DuckTable = <T,>({
   const agGridTheme = themeQuartz
     .withPart(appTheme === "dark" ? colorSchemeDark : colorSchemeLight)
     .withParams({
-      wrapperBorder: false,
-      headerRowBorder: false,
+      wrapperBorderRadius: "var(--radius-lg, 16px)",
       columnBorder: false,
-      headerColumnBorder: false,
-      rowBorder: { style: "solid", width: 1, color: { ref: "borderColor" } },
-      borderColor: { ref: "foregroundColor", mix: 0.1 },
+      borderColor: "var(--default, #2c2c2e)",
       backgroundColor: "transparent",
-      headerBackgroundColor: { ref: "foregroundColor", mix: 0.07 },
+
+      headerColumnBorder: false,
+      headerBackgroundColor: { ref: "borderColor", mix: 0.7 },
       headerTextColor: { ref: "foregroundColor", mix: 0.7 },
+      headerFontFamily: "var(--font-sans, ui-sans-serif, sans-serif)",
+      headerFontWeight: "var(--font-weight-medium, 500)",
+      headerVerticalPaddingScale: 0.5,
+
       rowHoverColor: { ref: "foregroundColor", mix: 0.1 },
       menuBackgroundColor:
         appTheme === "dark"
@@ -136,11 +139,7 @@ const DuckTable = <T,>({
           ? "var(--color-neutral-900, #1f2123)"
           : "var(--color-white, #ffffff)",
       fontFamily: "var(--font-mono, ui-monospace, monospace)",
-      headerFontFamily: "var(--font-sans, ui-sans-serif, sans-serif)",
       fontSize: "var(--text-sm, 14px)",
-      headerFontSize: "var(--text-xs, 13px)",
-      headerFontWeight: "var(--font-weight-medium, 500)",
-      headerVerticalPaddingScale: 0.5,
       spacing: 10,
       cellHorizontalPadding: "calc(var(--spacing, 0.25rem) * 2)",
     });
@@ -182,18 +181,14 @@ const DuckTable = <T,>({
             font-size: var(--text-sm, 14px);
             line-height: 1.1;
           }
-          .duck-table .ag-header {
-            border-radius: min(32px, var(--radius-3xl, 32px));
-          }
           .duck-table .ag-paging-panel {
+            gap: calc(var(--ag-spacing) * 2);
             font-family: var(--font-sans, ui-sans-serif, sans-serif);
             color: var(--ag-header-text-color);
             font-size: var(--ag-header-font-size);
             font-weight: var(--ag-header-font-weight);
-            border-radius: min(32px, var(--radius-3xl, 32px));
             height: var(--ag-header-height);
             background-color: var(--ag-header-background-color);
-            border-top: none;
             box-shadow: none;
           }
           .duck-table .ag-paging-page-size .ag-picker-field-wrapper {
@@ -206,7 +201,7 @@ const DuckTable = <T,>({
           .duck-table .ag-select-list {
             font-family: var(--font-sans, ui-sans-serif, sans-serif);
             border: 1px solid var(--ag-border-color);
-            border-radius: min(16px, var(--radius-2xl, 16px));
+            border-radius: var(--radius-2xl, 16px);
             background-color: var(--ag-menu-background-color);
             overflow: hidden;
           }
