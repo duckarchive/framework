@@ -15,6 +15,8 @@ import Loader from "./duck-loader";
 import { useEffect, useRef } from "react";
 import { Button } from "@heroui/react";
 
+const BORDER_RADIUS = "var(--radius-lg, 16px)";
+
 interface DuckTableProps<T> extends GridOptions<T> {
   appTheme?: string;
   columns: ColDef<T>[];
@@ -117,30 +119,21 @@ const DuckTable = <T,>({
   const agGridTheme = themeQuartz
     .withPart(appTheme === "dark" ? colorSchemeDark : colorSchemeLight)
     .withParams({
-      wrapperBorderRadius: "var(--radius-lg, 16px)",
+      wrapperBorderRadius: BORDER_RADIUS,
       columnBorder: false,
       borderColor: "var(--default, #2c2c2e)",
       backgroundColor: "transparent",
-
-      headerColumnBorder: false,
-      headerBackgroundColor: { ref: "borderColor", mix: 0.7 },
+      fontFamily: "var(--font-mono, ui-monospace, monospace)",
+      fontSize: "var(--text-sm, 14px)",
+      spacing: 10,
+      
+      headerBackgroundColor: { ref: "borderColor", mix: 0.5 },
       headerTextColor: { ref: "foregroundColor", mix: 0.7 },
       headerFontFamily: "var(--font-sans, ui-sans-serif, sans-serif)",
       headerFontWeight: "var(--font-weight-medium, 500)",
       headerVerticalPaddingScale: 0.5,
 
       rowHoverColor: { ref: "foregroundColor", mix: 0.1 },
-      menuBackgroundColor:
-        appTheme === "dark"
-          ? "var(--color-neutral-900, #1f2123)"
-          : "var(--color-white, #ffffff)",
-      chromeBackgroundColor:
-        appTheme === "dark"
-          ? "var(--color-neutral-900, #1f2123)"
-          : "var(--color-white, #ffffff)",
-      fontFamily: "var(--font-mono, ui-monospace, monospace)",
-      fontSize: "var(--text-sm, 14px)",
-      spacing: 10,
       cellHorizontalPadding: "calc(var(--spacing, 0.25rem) * 2)",
     });
 
@@ -172,6 +165,9 @@ const DuckTable = <T,>({
       )}
       <div className="h-96 flex-grow duck-table">
         <style>{`
+          .duck-table .ag-root-wrapper {
+            background-color: var(--ag-header-background-color);
+          }
           .duck-table .ag-cell {
             display: flex;
             align-items: center;
@@ -200,10 +196,11 @@ const DuckTable = <T,>({
           .duck-table .ag-list,
           .duck-table .ag-select-list {
             font-family: var(--font-sans, ui-sans-serif, sans-serif);
-            border: 1px solid var(--ag-border-color);
-            border-radius: var(--radius-2xl, 16px);
-            background-color: var(--ag-menu-background-color);
+            border: none;
+            background-color: var(--overlay);
+            border-radius: ${BORDER_RADIUS};
             overflow: hidden;
+            box-shadow: var(--shadow-overlay);
           }
           @media (max-width: 767px) {
             .duck-table .ag-paging-panel {
