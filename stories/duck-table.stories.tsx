@@ -50,7 +50,7 @@ type Story = StoryObj<typeof meta>;
 const DuckTableDemo = (args: Partial<React.ComponentProps<typeof DuckTable<DuckCase>>>) => {
   const [activeFilterId, setActiveFilterId] = useState<string | undefined>(args.activeFilterId);
   return (
-    <div style={{ height: 500 }} className="flex flex-col">
+    <div className="flex flex-col p-6 h-full bg-blue-100 dark:bg-blue-900">
       <DuckTable<DuckCase>
         id="storybook-duck-table"
         columns={columns}

@@ -6,6 +6,7 @@ import {
   ITextFilterParams,
   themeQuartz,
   colorSchemeDark,
+  colorSchemeLight,
   GridOptions,
   ColumnResizedEvent,
 } from "ag-grid-community";
@@ -113,8 +114,36 @@ const DuckTable = <T,>({
     }
   }, [activeFilterId]);
 
-  const agGridTheme =
-    appTheme === "dark" ? themeQuartz.withPart(colorSchemeDark) : themeQuartz;
+  const agGridTheme = themeQuartz
+    .withPart(appTheme === "dark" ? colorSchemeDark : colorSchemeLight)
+    .withParams({
+      wrapperBorder: false,
+      headerRowBorder: false,
+      columnBorder: false,
+      headerColumnBorder: false,
+      rowBorder: { style: "solid", width: 1, color: { ref: "borderColor" } },
+      borderColor: { ref: "foregroundColor", mix: 0.1 },
+      backgroundColor: "transparent",
+      headerBackgroundColor: { ref: "foregroundColor", mix: 0.07 },
+      headerTextColor: { ref: "foregroundColor", mix: 0.7 },
+      rowHoverColor: { ref: "foregroundColor", mix: 0.1 },
+      menuBackgroundColor:
+        appTheme === "dark"
+          ? "var(--color-neutral-900, #1f2123)"
+          : "var(--color-white, #ffffff)",
+      chromeBackgroundColor:
+        appTheme === "dark"
+          ? "var(--color-neutral-900, #1f2123)"
+          : "var(--color-white, #ffffff)",
+      fontFamily: "var(--font-mono, ui-monospace, monospace)",
+      headerFontFamily: "var(--font-sans, ui-sans-serif, sans-serif)",
+      fontSize: "var(--text-sm, 14px)",
+      headerFontSize: "var(--text-xs, 13px)",
+      headerFontWeight: "var(--font-weight-medium, 500)",
+      headerVerticalPaddingScale: 0.5,
+      spacing: 10,
+      cellHorizontalPadding: "calc(var(--spacing, 0.25rem) * 2)",
+    });
 
   const handleFilterClick = (filterId: string) => () => {
     console.log("click filter", filterId);
@@ -142,7 +171,57 @@ const DuckTable = <T,>({
           </div>
         </div>
       )}
-      <div className="h-96 flex-grow">
+      <div className="h-96 flex-grow duck-table">
+        <style>{`
+          .duck-table .ag-cell {
+            display: flex;
+            align-items: center;
+          }
+          .duck-table .ag-cell-wrapper > .ag-cell-value > *,
+          .duck-table .ag-cell-wrapper > .ag-cell-value {
+            font-size: var(--text-sm, 14px);
+            line-height: 1.1;
+          }
+          .duck-table .ag-header {
+            border-radius: min(32px, var(--radius-3xl, 32px));
+          }
+          .duck-table .ag-paging-panel {
+            font-family: var(--font-sans, ui-sans-serif, sans-serif);
+            color: var(--ag-header-text-color);
+            font-size: var(--ag-header-font-size);
+            font-weight: var(--ag-header-font-weight);
+            border-radius: min(32px, var(--radius-3xl, 32px));
+            height: var(--ag-header-height);
+            background-color: var(--ag-header-background-color);
+            border-top: none;
+            box-shadow: none;
+          }
+          .duck-table .ag-paging-page-size .ag-picker-field-wrapper {
+            height: auto;
+            min-height: 0;
+            padding: calc(var(--spacing, 0.25rem) * 1) calc(var(--spacing, 0.25rem) * 2);
+          }
+          .duck-table .ag-menu,
+          .duck-table .ag-list,
+          .duck-table .ag-select-list {
+            font-family: var(--font-sans, ui-sans-serif, sans-serif);
+            border: 1px solid var(--ag-border-color);
+            border-radius: min(16px, var(--radius-2xl, 16px));
+            background-color: var(--ag-menu-background-color);
+            overflow: hidden;
+          }
+          @media (max-width: 767px) {
+            .duck-table .ag-paging-panel {
+              justify-content: center !important;
+            }
+            .duck-table .ag-paging-panel .ag-paging-page-size {
+              display: none;
+            }
+            .duck-table .ag-paging-panel .ag-paging-row-summary-panel {
+              display: none;
+            }
+          }
+        `}</style>
         <AgGridReact
           ref={agGridRef}
           theme={agGridTheme}
